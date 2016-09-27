@@ -21,6 +21,6 @@ exec('cd alm_placeholder');
 exec('git add -A', insidePlaceholderRepo);
 exec(`git commit -m "v${version}"`, insidePlaceholderRepo);
 exec(`git tag "v${version}"`, insidePlaceholderRepo);
-exec('git push origin master --force', insidePlaceholderRepo);
-exec(`apm publish v${version}`, insidePlaceholderRepo);
+exec('git push origin master --follow-tags --force', insidePlaceholderRepo);
+exec(`apm publish --tag "v${version}"`, insidePlaceholderRepo);
 exec('rm -rf alm_placeholder');
