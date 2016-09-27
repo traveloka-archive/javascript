@@ -17,6 +17,12 @@ JavaScript style guide in Traveloka is enforced using tool called `marlint` whic
 
   Base config for all eslint rules.
 
+## Contributing
+
+We have 2 different repository for our packages: `atom-linter-marlint` use `apm` and both `marlint` and `eslint-config-marlint` use `npm`. All of them share the same version defined in `lerna.json`.
+
+To update package version run `npm run update-version`. This will create git commit and tag with updated version in all our packages. Then publish manually for each packages: use `apm publish` on `atom-linter-marlint` and `npm publish` for `marlint` and `eslint-config-marlint`
+
 ## License
 
 MIT © [Traveloka](https://www.traveloka.com)

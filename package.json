@@ -2,6 +2,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "update-version": "lerna publish --skip-npm",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap -- -y",
