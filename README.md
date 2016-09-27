@@ -2,20 +2,20 @@
 
 [![Build Status](https://travis-ci.org/traveloka/javascript.svg?branch=master)](https://travis-ci.org/traveloka/javascript)
 
-This repository contains packages to enforce JS style guide in Traveloka. It supports React, Flowtype, ES2015+ by using ESLint.
+JavaScript style guide in Traveloka is enforced using tool called `marlint` which is a CLI based linter by extending [ESLint](http://eslint.org/) to support React, Flowtype, and ES2015+ natively. This repository is a monorepo built using [Lerna](https://github/lerna/lerna) to build modules around `marlint` like [Atom](https://atom.io) plugins and base ESLint config.
 
 ## Packages
-  - **[marlint](packages/marlint)**
+- **[marlint](packages/marlint)**
 
-   Main package, provides API and CLI.
+  Main package, provides CLI and programatic API.
 
- - **[atom-linter-marlint](packages/atom-linter-marlint)**
+- **[atom-linter-marlint](packages/atom-linter-marlint)**
 
   Atom plugin for enabling linter inside Atom editor.
 
- - **[eslint-config-marlint](packages/eslint-config-marlint)**
+- **[eslint-config-marlint](packages/eslint-config-marlint)**
 
-   Base config for all eslint rules.
+  Base config for all eslint rules.
 
 ## License
 
