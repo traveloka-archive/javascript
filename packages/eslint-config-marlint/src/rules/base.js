@@ -8,21 +8,13 @@ module.exports = {
     node: true,
     es6: true,
   },
-  parserOptions: {
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-    },
-  },
-  ecmaFeatures: {
-    experimentalObjectRestSpread: true,
-  },
   extends: ['eslint:recommended'],
   // All rules below are rules not exist in 'eslint:recommended'
   // http://eslint.org/docs/rules/
   rules: {
     // Make sure all variables are used, except function parameters
     // http://eslint.org/docs/rules/no-unused-vars
-    'no-unused-vars': ['error', { args: 'none' }],
+    'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
 
     // Prevent accidental negation error
     // http://eslint.org/docs/rules/no-unsafe-negation

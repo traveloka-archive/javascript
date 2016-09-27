@@ -1,4 +1,5 @@
 /* eslint-env jest */
+/* eslint no-sync: 0 */
 const path = require('path');
 const fs = require('fs');
 const eslint = require('eslint');
@@ -7,7 +8,7 @@ const tempWrite = require('temp-write');
 function runEslint(str, conf) {
   const linter = new eslint.CLIEngine({
     useEslintrc: false,
-    configFile: tempWrite.sync(JSON.stringify(conf))
+    configFile: tempWrite.sync(JSON.stringify(conf)),
   });
 
   return linter.executeOnText(str).results[0].messages;
@@ -23,7 +24,7 @@ describe('eslint-config-marlint', () => {
       severity: err.severity,
       line: err.line,
       column: err.column,
-      source: err.source
+      source: err.source,
     }));
 
     expect(errors).toMatchSnapshot();

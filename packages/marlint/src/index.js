@@ -1,10 +1,9 @@
 /* eslint prefer-arrow-callback: 0 */
-/* eslint no-var:0 */
 'use strict';
-var path = require('path');
-var eslint = require('eslint');
-var globby = require('globby');
-var handleOpts = require('./handle-opts');
+const path = require('path');
+const eslint = require('eslint');
+const globby = require('globby');
+const handleOpts = require('./handle-opts');
 
 function patchSomeMessages(data) {
   data.results = data.results.map(result => {
@@ -42,14 +41,14 @@ exports.lintFiles = function lintFiles(patterns, opts) {
   return globby(patterns, { ignore: opts.ignores }).then(paths => {
     // when users are silly and don't specify an extension in the glob pattern
     paths = paths.filter(x => {
-      var ext = path.extname(x);
+      const ext = path.extname(x);
 
       return ext === '.js' || ext === '.jsx';
     });
 
-    var engine = new eslint.CLIEngine(opts._config);
+    const engine = new eslint.CLIEngine(opts._config);
 
-    return patchSomeMessages(engine.executeOnFiles(paths));
+    return patchSomeMessages(engine.executeOnFiles(paths, opts._config));
   });
 };
 

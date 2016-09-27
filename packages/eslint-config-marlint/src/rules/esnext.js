@@ -1,11 +1,17 @@
 module.exports = {
+  // We need babel-eslint to enable Flow support
   parser: 'babel-eslint',
-  plugins: ['babel'],
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module',
-    ecmaFeatures: { experimentalObjectRestSpread: true },
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+    },
   },
+  ecmaFeatures: {
+    experimentalObjectRestSpread: true,
+  },
+  plugins: ['babel'],
   // View link below for babel rules documentation
   // https://github.com/babel/eslint-plugin-babel#rules
   rules: {

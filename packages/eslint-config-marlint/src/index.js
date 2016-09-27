@@ -3,6 +3,6 @@ module.exports = {
     './rules/base',
     './rules/esnext',
     './rules/react',
-    './rules/jsx-a11y'
-  ].map(require.resolve)
+    './rules/jsx-a11y',
+  ].map(require.resolve),
 };

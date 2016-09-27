@@ -7,10 +7,11 @@ type UnusedProps = {
 };
 
 type BlockProps = {
-  hello: string
+  hello: string;
+  world: string
 };
 
-const parens = (args) => {
+const parens = args => {
   // - arrow-body-style
   // - react/react-in-jsx-scope
   return <div>{args}</div>;
