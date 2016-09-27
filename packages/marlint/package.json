@@ -1,0 +1,67 @@
+{
+  "name": "marlint",
+  "version": "2.1.0",
+  "description": "Javascript code linter for traveloka js styleguide",
+  "license": "MIT",
+  "repository": "traveloka/javascript",
+  "author": {
+    "name": "Traveloka",
+    "url": "traveloka.com"
+  },
+  "main": "src/index.js",
+  "bin": "src/cli.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testRegex": "-test\\.js$"
+  },
+  "files": [
+    "src/index.js",
+    "src/cli.js",
+    "src/handle-opts.js"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "marlint",
+    "code",
+    "quality",
+    "style",
+    "lint",
+    "linter",
+    "jscs",
+    "jshint",
+    "jslint",
+    "eslint",
+    "validate",
+    "code style",
+    "standard",
+    "strict",
+    "check",
+    "checker",
+    "verify",
+    "enforce",
+    "hint",
+    "simple"
+  ],
+  "dependencies": {
+    "arrify": "^1.0.1",
+    "babel-eslint": "^6.1.2",
+    "deep-assign": "^2.0.0",
+    "eslint": "^3.6.0",
+    "eslint-config-marlint": "^2.1.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "get-stdin": "^5.0.1",
+    "globby": "^6.0.0",
+    "meow": "^3.7.0",
+    "object-assign": "^4.1.0",
+    "pkg-conf": "^1.1.3",
+    "update-notifier": "^1.0.2"
+  },
+  "devDependencies": {
+    "jest": "^15.1.1"
+  }
+}

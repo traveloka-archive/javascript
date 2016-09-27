@@ -1,0 +1,165 @@
+exports[`eslint-config-marlint block offending rule 1`] = `
+Array [
+  Object {
+    "column": 26,
+    "line": 13,
+    "ruleId": "arrow-body-style",
+    "severity": 2,
+    "source": "const parens = (args) => {"
+  },
+  Object {
+    "column": 10,
+    "line": 16,
+    "ruleId": "react/react-in-jsx-scope",
+    "severity": 2,
+    "source": "  return <div>{args}</div>;"
+  },
+  Object {
+    "column": 3,
+    "line": 24,
+    "ruleId": "no-unused-expressions",
+    "severity": 2,
+    "source": "  <h1>{\`It works ${props.text}\`}</h1>;"
+  },
+  Object {
+    "column": 3,
+    "line": 24,
+    "ruleId": "react/react-in-jsx-scope",
+    "severity": 2,
+    "source": "  <h1>{\`It works ${props.text}\`}</h1>;"
+  },
+  Object {
+    "column": 1,
+    "line": 29,
+    "ruleId": "react/no-multi-comp",
+    "severity": 2,
+    "source": "class Block extends React.Component {"
+  },
+  Object {
+    "column": 21,
+    "line": 29,
+    "ruleId": "no-undef",
+    "severity": 2,
+    "source": "class Block extends React.Component {"
+  },
+  Object {
+    "column": 20,
+    "line": 33,
+    "ruleId": "no-empty-function",
+    "severity": 2,
+    "source": "  onClick = (e) => {"
+  },
+  Object {
+    "column": 7,
+    "line": 43,
+    "ruleId": "react/react-in-jsx-scope",
+    "severity": 2,
+    "source": "      <div className=\"as\" onClick={this.onClick}>"
+  },
+  Object {
+    "column": 7,
+    "line": 43,
+    "ruleId": "jsx-a11y/onclick-has-role",
+    "severity": 2,
+    "source": "      <div className=\"as\" onClick={this.onClick}>"
+  },
+  Object {
+    "column": 7,
+    "line": 43,
+    "ruleId": "jsx-a11y/onclick-has-focus",
+    "severity": 2,
+    "source": "      <div className=\"as\" onClick={this.onClick}>"
+  },
+  Object {
+    "column": 22,
+    "line": 43,
+    "ruleId": "jsx-quotes",
+    "severity": 2,
+    "source": "      <div className=\"as\" onClick={this.onClick}>"
+  },
+  Object {
+    "column": 27,
+    "line": 43,
+    "ruleId": "react/jsx-handler-names",
+    "severity": 2,
+    "source": "      <div className=\"as\" onClick={this.onClick}>"
+  },
+  Object {
+    "column": 1,
+    "line": 51,
+    "ruleId": "no-var",
+    "severity": 2,
+    "source": "var text: string = \'random\';"
+  },
+  Object {
+    "column": 5,
+    "line": 55,
+    "ruleId": "prefer-const",
+    "severity": 2,
+    "source": "let x = {"
+  },
+  Object {
+    "column": 3,
+    "line": 58,
+    "ruleId": "babel/object-shorthand",
+    "severity": 1,
+    "source": "  text: text"
+  },
+  Object {
+    "column": 13,
+    "line": 58,
+    "ruleId": "comma-dangle",
+    "severity": 2,
+    "source": "  text: text"
+  },
+  Object {
+    "column": 3,
+    "line": 66,
+    "ruleId": "prefer-arrow-callback",
+    "severity": 2,
+    "source": "  function (req, res, next) {"
+  },
+  Object {
+    "column": 3,
+    "line": 66,
+    "ruleId": "func-names",
+    "severity": 2,
+    "source": "  function (req, res, next) {"
+  },
+  Object {
+    "column": 12,
+    "line": 68,
+    "ruleId": "react/react-in-jsx-scope",
+    "severity": 2,
+    "source": "    render(<Block hello={myText} {...rest} />);"
+  },
+  Object {
+    "column": 1,
+    "line": 84,
+    "ruleId": "no-console",
+    "severity": 2,
+    "source": "console.log(\"testing\" + x.text + \'asd\')"
+  },
+  Object {
+    "column": 13,
+    "line": 84,
+    "ruleId": "prefer-template",
+    "severity": 1,
+    "source": "console.log(\"testing\" + x.text + \'asd\')"
+  },
+  Object {
+    "column": 13,
+    "line": 84,
+    "ruleId": "quotes",
+    "severity": 2,
+    "source": "console.log(\"testing\" + x.text + \'asd\')"
+  },
+  Object {
+    "column": 40,
+    "line": 84,
+    "ruleId": "semi",
+    "severity": 2,
+    "source": "console.log(\"testing\" + x.text + \'asd\')"
+  }
+]
+`;

@@ -1,0 +1,44 @@
+{
+  "name": "linter-marlint",
+  "version": "0.9.0",
+  "description": "Atom Linter plugin for Marlint",
+  "license": "MIT",
+  "repository": "traveloka/javascript",
+  "private": true,
+  "main": "src/index.js",
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "author": {
+    "name": "Traveloka",
+    "url": "traveloka.com"
+  },
+  "engines": {
+    "atom": ">=1.0.11"
+  },
+  "scripts": {
+    "test": "echo \"No test for atom-linter-marlint\""
+  },
+  "keywords": [
+    "javascript",
+    "linter",
+    "code-style",
+    "marlint"
+  ],
+  "dependencies": {
+    "atom-package-deps": "^4.0.1",
+    "atom-set-text": "^1.0.1",
+    "eslint-rule-documentation": "^1.0.0",
+    "load-json-file": "^2.0.0",
+    "loophole": "^1.1.0",
+    "marlint": "^2.1.0",
+    "pkg-dir": "^1.0.0"
+  },
+  "package-deps": [
+    "linter"
+  ]
+}

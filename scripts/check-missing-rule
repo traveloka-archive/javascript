@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+/* eslint no-console: 0 */
+const DEPRECATED_RULES = [
+  'react/no-comment-textnodes',
+  'react/require-extension',
+  'react/wrap-multilines',
+];
+
+// Prints rules recognized by ESLint that don't appear in the given config
+// preset. It helps with upgrading the preset when new ESLint gets released.
+const getRuleFinder = require('eslint-find-rules');
+const specifiedFile = process.argv[2];
+const ruleFinder = getRuleFinder(specifiedFile);
+
+const missingRules = ruleFinder.getUnusedRules()
+.filter(rule => DEPRECATED_RULES.indexOf(rule) === -1);
+
+if (missingRules.length) {
+  console.log(`New rules to add to the config: ${missingRules.join(', ')}.`);
+  process.exit(1);
+}

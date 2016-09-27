@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "test": "npm run check-rules && npm run test-packages",
+    "test-packages": "lerna run test",
+    "check-rules": "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "babel-jest": "^15.0.0",
+    "eslint": "^3.6.0",
+    "eslint-find-rules": "^1.13.2",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "jest": "^15.1.1",
+    "lerna": "^2.0.0-beta.29",
+    "marlint": "^2.1.0",
+    "temp-write": "^2.1.0"
+  }
+}
