@@ -4,6 +4,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
+    "postinstall": "npm run bootstrap -- -y",
     "test": "npm run check-rules && npm run test-packages",
     "test-packages": "lerna run test",
     "check-rules": "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js"
