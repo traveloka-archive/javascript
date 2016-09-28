@@ -5,6 +5,7 @@
 JavaScript style guide in Traveloka is enforced using tool called `marlint` which is a CLI based linter by extending [ESLint](http://eslint.org/) to support React, Flowtype, and ES2015+ natively. This repository is a monorepo built using [Lerna](https://github.com/lerna/lerna) to build modules around `marlint` like [Atom](https://atom.io) plugins and base ESLint config.
 
 ## Packages
+
 - **[marlint](packages/marlint)**
 
   Main package, provides CLI and programmatic API.
@@ -16,6 +17,40 @@ JavaScript style guide in Traveloka is enforced using tool called `marlint` whic
 - **[eslint-config-marlint](packages/eslint-config-marlint)**
 
   Base config for all eslint rules.
+
+## Getting started
+
+To setup this repo locally, run following commands
+
+```
+# Clone repo
+$ git clone git@github.com:traveloka/javascript
+$ cd javascript
+
+# Install dependencies
+# This will automatically run `lerna bootstrap` which will install all package
+# dependencies and link all packages together
+$ npm install
+
+# Monkey patch ESLint (see issue #1)
+$ ./scripts/patch-eslint
+```
+
+To run test use `npm test` in root directory, or if you want to run test manually
+for single package just change directory to that package and run `npm test` inside
+each package directory.
+
+### Atom plugin integration
+
+Using Atom when developing these packages will be much easier if you link atom linter
+package to your atom packages. By linking `atom-linter-marlint` every changes across
+packages will be applied as you save the file (except editing files inside `atom-linter-marlint`
+package, you need to reload Atom using `View - Developer - Reload Window`)
+
+```
+$ cd atom-linter-marlint
+$ apm link
+```
 
 ## Contributing
 
