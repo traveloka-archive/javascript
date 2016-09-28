@@ -11,7 +11,7 @@
     "check-rules": "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js"
   },
   "devDependencies": {
-    "babel-eslint": "^6.1.2",
+    "babel-eslint": "^7.0.0",
     "babel-jest": "^15.0.0",
     "eslint": "^3.6.0",
     "eslint-find-rules": "^1.13.2",
