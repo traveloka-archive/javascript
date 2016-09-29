@@ -45,5 +45,11 @@
   "homepage": "https://github.com/traveloka/javascript/packages/eslint-config-marlint#readme",
   "devDependencies": {
     "jest": "^15.1.1"
+  },
+  "peerDependencies": {
+    "eslint": "^3.6.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0"
   }
 }

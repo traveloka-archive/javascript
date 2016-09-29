@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# HACK: Using babel-eslint parser options causing weird error on unit test
-# when running linter using new eslint.CLIEngine on no-unused-vars rule.
-# This script will monkey patch eslint library by adding another check
-# to no-unused-vars rule so it won't throw error
-RULE_PATH="node_modules/eslint/lib/rules/no-unused-vars.js"
-
-cp scripts/fixtures/no-unused-vars.js $RULE_PATH
