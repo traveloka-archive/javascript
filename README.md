@@ -22,7 +22,7 @@ JavaScript style guide in Traveloka is enforced using tool called `marlint` whic
 
 To setup this repo locally, run following commands
 
-```
+```sh
 # Clone repo
 $ git clone git@github.com:traveloka/javascript
 $ cd javascript
@@ -44,7 +44,7 @@ package to your atom packages. By linking `atom-linter-marlint` every changes ac
 packages will be applied as you save the file (except editing files inside `atom-linter-marlint`
 package, you need to reload Atom using `View - Developer - Reload Window`)
 
-```
+```sh
 $ cd atom-linter-marlint
 $ apm link
 ```
