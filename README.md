@@ -31,9 +31,6 @@ $ cd javascript
 # This will automatically run `lerna bootstrap` which will install all package
 # dependencies and link all packages together
 $ npm install
-
-# Monkey patch ESLint (see issue #1)
-$ ./scripts/patch-eslint
 ```
 
 To run test use `npm test` in root directory, or if you want to run test manually

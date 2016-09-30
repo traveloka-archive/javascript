@@ -57,13 +57,6 @@ Array [
     "source": "class Block extends React.Component {"
   },
   Object {
-    "column": 7,
-    "line": 31,
-    "ruleId": "no-unused-vars",
-    "severity": 2,
-    "source": "class Block extends React.Component {"
-  },
-  Object {
     "column": 21,
     "line": 31,
     "ruleId": "no-undef",
