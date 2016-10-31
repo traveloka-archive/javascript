@@ -12,6 +12,10 @@ module.exports = {
   // All rules below are rules not exist in 'eslint:recommended'
   // http://eslint.org/docs/rules/
   rules: {
+    // Use console sparingly, and use proper logging library like bunyan
+    // http://eslint.org/docs/rules/no-console
+    'no-console': 'warn',
+
     // Make sure all variables are used, except function parameters
     // http://eslint.org/docs/rules/no-unused-vars
     'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
@@ -26,7 +30,7 @@ module.exports = {
 
     // Use curly braces on block statement like if/while
     // http://eslint.org/docs/rules/curly
-    'curly': 'warn',
+    'curly': 'error',
 
     // Always add default case in switch statements
     // http://eslint.org/docs/rules/default-case
@@ -166,11 +170,11 @@ module.exports = {
 
     // Use camelcase for variable names and object property
     // http://eslint.org/docs/rules/camelcase
-    'camelcase': 'warn',
+    'camelcase': ['warn', { properties: 'never' }],
 
     // Always use comma-dangle in multiline items for easier diff
     // http://eslint.org/docs/rules/comma-dangle
-    'comma-dangle': ['warn', 'always-multiline'],
+    'comma-dangle': ['error', 'always-multiline'],
 
     // Always put space after comma
     // http://eslint.org/docs/rules/comma-spacing

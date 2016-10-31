@@ -19,26 +19,23 @@ function runEslint(file) {
   });
 }
 
-describe('eslint-config-marlint', () => {
-  it('block offending rule', async () => {
-    const file = path.join(__dirname, './fixture-error.js');
-    let errors = await runEslint(file);
+it('block offending rule', async () => {
+  const file = path.join(__dirname, './fixture-error.js');
+  let errors = await runEslint(file);
 
-    errors = errors.map(err => ({
-      ruleId: err.ruleId,
-      severity: err.severity,
-      line: err.line,
-      column: err.column,
-      source: err.source,
-    }));
+  errors = errors.map(err => ({
+    ruleId: err.ruleId,
+    severity: err.severity,
+    line: err.line,
+    column: err.column,
+  }));
 
-    expect(errors).toMatchSnapshot();
-  });
+  expect(errors).toMatchSnapshot();
+});
 
-  it('pass on correct code', async () => {
-    const file = path.join(__dirname, './fixture-pass.js');
-    const errors = await runEslint(file);
+it('pass on correct code', async () => {
+  const file = path.join(__dirname, './fixture-pass.js');
+  const errors = await runEslint(file);
 
-    expect(errors.length).toEqual(0);
-  });
+  expect(errors.length).toEqual(0);
 });

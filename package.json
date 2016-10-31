@@ -2,7 +2,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "update-version": "lerna publish --skip-npm",
+    "publish:lib": "lerna publish",
+    "publish:atom": "./scripts/publish-atom-linter",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap -- -y",
@@ -22,6 +23,6 @@
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "lerna": "^2.0.0-beta.29"
+    "lerna": "2.0.0-beta.30"
   }
 }

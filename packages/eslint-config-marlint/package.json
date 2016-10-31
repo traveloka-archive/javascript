@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "jest": {
-    "testRegex": "-test\\.js$"
+    "testRegex": "__tests__/.*.test\\.js$"
   },
   "files": [
     "src/index.js",
@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/traveloka/javascript/packages/eslint-config-marlint#readme",
   "devDependencies": {
-    "jest": "^15.1.1"
+    "jest": "^16.0.2"
   },
   "peerDependencies": {
     "eslint": "^3.6.1",

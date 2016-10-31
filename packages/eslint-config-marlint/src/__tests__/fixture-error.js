@@ -2,75 +2,80 @@
 import { render } from 'react-dom';
 
 // Flow type declaration should be allowed
-type UnusedProps = {
+type PropTypesViaFlowTypes = {
+  // react/no-unused-prop-types
   text?: ?string
 };
 
 type BlockProps = {
+  // babel/flow-object-type
   hello: string;
+  // react/no-unused-prop-types
   world: string
 };
 
+// arrow-body-style
 const parens = args => {
-  // - arrow-body-style
-  // - react/react-in-jsx-scope
+  // react/react-in-jsx-scope
   return <div>{args}</div>;
 };
 parens.displayName = 'Parens';
 
-// - no-unused-vars
-const Unused = (props: UnusedProps) => {
+// no-unused-vars
+// react/no-multi-comp
+const Unused = (props: PropTypesViaFlowTypes) => {
   parens();
-  // - no-unused-expressions
-  // - react/react-in-jsx-scope
-  <h1>{`It works ${props.text}`}</h1>;
+  // react/react-in-jsx-scope
+  // react/prop-types
+  return <h1>{`It works ${props.texas}`}</h1>;
 };
 
-// - react/no-multi-comp
-// - no-undef
+// react/no-multi-comp
+// no-undef
 class Block extends React.Component {
   props: BlockProps;
 
-  // - no-empty-function
+  // babel/arrow-parens
+  // no-empty-function
   onClick = (e) => {
   }
 
   render() {
-    // - react/react-in-jsx-scope
-    // - jsx-a11y/onclick-has-role
-    // - jsx-a11y/onclick-has-focus
-    // - react/jsx-quotes
-    // - react/jsx-handler-names
+    // react/react-in-jsx-scope
+    // jsx-a11y/onclick-has-role
+    // react/jsx-quotes
+    // react/jsx-handler-names
     return (
-      <div className="as" onClick={this.onClick}>
+      <div className="as" onClick={this.onClick} tabIndex={-1}>
         {this.props.hello}
       </div>
     );
   }
 }
 
-// - no-var
+// no-var
 var text: string = 'random';
 text += 'a';
 
-// - prefer-const
+// prefer-const
 let x = {
-  // - babel/object-shorthand
-  // - comma-dangle
+  // babel/object-shorthand
+  // comma-dangle
   text: text
 };
 
 const { text: myText, ...rest } = x;
 
 x.run(
-  // - prefer-arrow-callback
-  // - func-names
+  // prefer-arrow-callback
+  // func-names
   function (req, res, next) {
     // - react/react-in-jsx-scope
     render(<Block hello={myText} {...rest} />);
   },
-  (cb) => {
-    x.run();
+  cb => {
+    // curly
+    if (x) x.run();
 
     return cb();
   },
@@ -79,8 +84,8 @@ x.run(
   }
 );
 
-// - no-console
-// - prefer-template
-// - quotes
-// - semi
+// no-console
+// quotes
+// prefer-template
+// semi
 console.log("testing" + x.text + 'asd')

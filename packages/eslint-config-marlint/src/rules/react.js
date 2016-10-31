@@ -19,7 +19,7 @@ module.exports = {
 
     // React lifecycle doesn't always contains `this` inside, but enable rules for other classes
     // http://eslint.org/docs/rules/class-methods-use-this
-    'class-methods-use-this': ['error', {
+    'class-methods-use-this': ['warn', {
       exceptMethods: [
         'componentWillMount',
         'componentDidMount',
@@ -60,9 +60,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-deprecated.md
     'react/no-deprecated': 'off',
 
-    // No this.setState call in componentDidMount
+    // this.setState in componentDidMount is useful for client-side AJAX call
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-mount-set-state.md
-    'react/no-did-mount-set-state': 'error',
+    'react/no-did-mount-set-state': 'off',
 
     // No this.setState call in componentDidUpdate
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md
