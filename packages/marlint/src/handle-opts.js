@@ -1,9 +1,9 @@
-var objectAssign = require('object-assign');
-var arrify = require('arrify');
-var pkgConf = require('pkg-conf');
-var deepAssign = require('deep-assign');
+const objectAssign = require('object-assign');
+const arrify = require('arrify');
+const pkgConf = require('pkg-conf');
+const deepAssign = require('deep-assign');
 
-var DEFAULT_IGNORE = [
+const DEFAULT_IGNORE = [
   'node_modules/**',
   'bower_components/**',
   'coverage/**',
@@ -11,19 +11,19 @@ var DEFAULT_IGNORE = [
   '**/*.min.js',
   '**/bundle.js',
   'fixture.js',
-  '{test/,}fixture{s,}/**'
+  '{test/,}fixture{s,}/**',
 ];
 
-var DEFAULT_CONFIG = {
+const DEFAULT_CONFIG = {
   useEslintrc: false,
   baseConfig: {
-    extends: 'marlint'
-  }
+    extends: 'marlint',
+  },
 };
 
 module.exports = function handleOpts(opts) {
   opts = objectAssign({
-    cwd: process.cwd()
+    cwd: process.cwd(),
   }, opts);
 
   opts = objectAssign({}, pkgConf.sync('marlint', opts.cwd), opts);
@@ -41,7 +41,7 @@ module.exports = function handleOpts(opts) {
     globals: arrify(opts.globals),
     rules: opts.rules,
     quiet: opts.quiet,
-    fix: opts.fix
+    fix: opts.fix,
   });
 
   if (!opts._config.rules) {

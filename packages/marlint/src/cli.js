@@ -1,56 +1,60 @@
 #!/usr/bin/env node
 'use strict';
-var updateNotifier = require('update-notifier');
-var getStdin = require('get-stdin');
-var meow = require('meow');
-var marlint = require('./');
+const fs = require('fs');
+const updateNotifier = require('update-notifier');
+const getStdin = require('get-stdin');
+const meow = require('meow');
+const marlint = require('./');
 
-var cli = meow({
+const cli = meow({
   help: [
     'Usage',
     '  $ marlint [<file|glob> ...]',
     '',
     'Options',
-    '  --compact       Compact output',
-    '  --stdin         Validate code from stdin',
-    '  --es5           Disable ES2015+ rules',
-    '  --env           Environment preset  [Can be set multiple times]',
-    '  --global        Global variable  [Can be set multiple times]',
-    '  --ignore        Additional paths to ignore  [Can be set multiple times]',
-    '  --quiet         Disable warning errors',
-    '  --fix           Automagically fixes code',
+    '  --quiet           Disable warning errors',
+    '  --fix             Automagically fixes code',
+    '  --json            Output JSON result to be consumed in other app',
+    '  --jsonOutputFile  Specify filename to store the JSON result',
     '',
     'Examples',
     '  $ marlint',
-    '  $ marlint index.js',
-    '  $ marlint *.js !foo.js',
-    '  $ marlint --es5',
-    '  $ marlint --env=node --env=mocha',
+    '  $ marlint --fix',
+    '  $ marlint --quiet --json --jsonOutputFile lint-result.json',
     '',
     'Tips',
-    '  Put options in package.json instead of using flags so other tools can read it.'
-  ]
-}, {
-  string: [
-    '_'
+    '  Put options in package.json instead of using flags so other tools can read it.',
   ],
+}, {
   boolean: [
-    'compact',
-    'stdin'
-  ]
+    'json',
+  ],
 });
 
 updateNotifier({ pkg: cli.pkg }).notify();
 
-var input = cli.input;
-var opts = cli.flags;
+const input = cli.input;
+const opts = cli.flags;
 
 function log(report) {
   if (opts.compact) {
     opts.reporter = 'compact';
   }
 
-  process.stdout.write(marlint.getFormatter(opts.reporter)(report.results));
+  if (opts.json) {
+    const eslintJson = require.resolve('eslint-json');
+    const result = marlint.getFormatter(eslintJson)(report.results);
+
+    if (opts.jsonOutputFile) {
+      fs.writeFileSync(opts.jsonOutputFile, result);
+      process.stdout.write(`Test results written to: ${opts.jsonOutputFile}`);
+    } else {
+      process.stdout.write(result);
+    }
+  } else {
+    process.stdout.write(marlint.getFormatter(opts.reporter)(report.results));
+  }
+
   process.exit(report.errorCount === 0 ? 0 : 1);
 }
 
@@ -65,15 +69,15 @@ function isErrorMessage(message) {
 }
 
 function surpressWarning(results) {
-  var filtered = [];
+  const filtered = [];
 
-  results.forEach(function (result) {
-    var filteredMessages = result.messages.filter(isErrorMessage);
+  results.forEach(result => {
+    const filteredMessages = result.messages.filter(isErrorMessage);
 
     if (filteredMessages.length > 0) {
       filtered.push({
         filePath: result.filePath,
-        messages: filteredMessages
+        messages: filteredMessages,
       });
     }
   });
@@ -82,7 +86,7 @@ function surpressWarning(results) {
 }
 
 if (opts.stdin) {
-  getStdin().then(function (str) {
+  getStdin().then(str => {
     log(marlint.lintText(str, opts));
   });
 } else {
