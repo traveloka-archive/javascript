@@ -385,5 +385,9 @@ module.exports = {
     // No space inside template string variables
     // http://eslint.org/docs/rules/template-curly-spacing
     'template-curly-spacing': ['warn', 'never'],
+
+    // Allow extending another class without lint error
+    // http://eslint.org/docs/rules/class-methods-use-this
+    'class-methods-use-this': 'off',
   },
 };

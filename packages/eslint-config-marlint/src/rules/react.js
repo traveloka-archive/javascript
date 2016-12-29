@@ -17,21 +17,6 @@ module.exports = {
     // http://eslint.org/docs/rules/jsx-quotes
     'jsx-quotes': ['error', 'prefer-single'],
 
-    // React lifecycle doesn't always contains `this` inside, but enable rules for other classes
-    // http://eslint.org/docs/rules/class-methods-use-this
-    'class-methods-use-this': ['warn', {
-      exceptMethods: [
-        'componentWillMount',
-        'componentDidMount',
-        'componentWillReceiveProps',
-        'shouldComponentUpdate',
-        'componentWillUpdate',
-        'componentDidUpdate',
-        'componentWillUnmount',
-        'render',
-      ],
-    }],
-
     // React displayName already added via babel transform
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/display-name.md
     'react/display-name': ['off', { ignoreTranspilerName: false }],
