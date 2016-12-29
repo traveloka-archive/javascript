@@ -5,43 +5,43 @@ module.exports = {
   rules: {
     // Anchor tag (a and Link in react-router) should always have a child
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-has-content.md
-    'jsx-a11y/anchor-has-content': 'error',
+    'jsx-a11y/anchor-has-content': 'warn',
 
     // Use valid ARIA props
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-props.md
-    'jsx-a11y/aria-props': 'error',
+    'jsx-a11y/aria-props': 'warn',
 
     // Use valid ARIA prop value
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-props.md
-    'jsx-a11y/aria-proptypes': 'error',
+    'jsx-a11y/aria-proptypes': 'warn',
 
     // Use valid ARIA role value
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-role.md
-    'jsx-a11y/aria-role': 'error',
+    'jsx-a11y/aria-role': 'warn',
 
     // No useless ARIA prop in unsupported element
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-unsupported-elements.md
-    'jsx-a11y/aria-unsupported-elements': 'error',
+    'jsx-a11y/aria-unsupported-elements': 'warn',
 
     // Heading tag (h1, h2, h3, etc) must have a content
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/heading-has-content.md
-    'jsx-a11y/heading-has-content': 'error',
+    'jsx-a11y/heading-has-content': 'warn',
 
     // No useless # href on anchor tag
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/href-no-hash.md
-    'jsx-a11y/href-no-hash': ['error'],
+    'jsx-a11y/href-no-hash': ['warn'],
 
     // HTML tag must contains lang property
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/html-has-lang.md
-    'jsx-a11y/html-has-lang': 'error',
+    'jsx-a11y/html-has-lang': 'warn',
 
     // Image tag should have an alt property
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-has-alt.md
-    'jsx-a11y/img-has-alt': 'error',
+    'jsx-a11y/img-has-alt': 'warn',
 
     // No need to use image/photo as alt
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md
-    'jsx-a11y/img-redundant-alt': 'error',
+    'jsx-a11y/img-redundant-alt': 'warn',
 
     // Label ideally have an htmlFor prop
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
@@ -49,7 +49,7 @@ module.exports = {
 
     // HTML lang must have valid value
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/lang.md
-    'jsx-a11y/lang': 'error',
+    'jsx-a11y/lang': 'warn',
 
     // Element with onClick handler must be focusable
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/onclick-has-focus.md
@@ -61,19 +61,19 @@ module.exports = {
 
     // Component with ARIA role must have complete ARIA prop
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-has-required-aria-props.md
-    'jsx-a11y/role-has-required-aria-props': 'error',
+    'jsx-a11y/role-has-required-aria-props': 'warn',
 
     // Only add ARIA role supported for that component
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-supports-aria-props.md
-    'jsx-a11y/role-supports-aria-props': 'error',
+    'jsx-a11y/role-supports-aria-props': 'warn',
 
     // Only use scope prop in th element
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md
-    'jsx-a11y/scope': 'error',
+    'jsx-a11y/scope': 'warn',
 
     // No positive tabindex
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/tabindex-no-positive.md
-    'jsx-a11y/tabindex-no-positive': 'error',
+    'jsx-a11y/tabindex-no-positive': 'warn',
 
     // Currently we don't focus much on a11y for these areas
     'jsx-a11y/no-onchange': 'off',
