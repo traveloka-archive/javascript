@@ -9,7 +9,7 @@ Array [
   Object {
     "column": 16,
     "line": 12,
-    "ruleId": "babel/flow-object-type",
+    "ruleId": "flowtype/object-type-delimiter",
     "severity": 2,
   },
   Object {
@@ -69,7 +69,7 @@ Array [
   Object {
     "column": 13,
     "line": 40,
-    "ruleId": "babel/arrow-parens",
+    "ruleId": "arrow-parens",
     "severity": 1,
   },
   Object {
@@ -117,7 +117,7 @@ Array [
   Object {
     "column": 3,
     "line": 64,
-    "ruleId": "babel/object-shorthand",
+    "ruleId": "object-shorthand",
     "severity": 1,
   },
   Object {
