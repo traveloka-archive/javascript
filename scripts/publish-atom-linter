@@ -8,7 +8,7 @@
  */
 const path = require('path');
 const exec = require('child_process').execSync;
-const version = require('../lerna.json').version;
+const version = require('../packages/atom-linter-marlint/package.json').version;
 
 const insidePlaceholderRepo = {
   cwd: path.join(process.cwd(), 'alm_placeholder'),
