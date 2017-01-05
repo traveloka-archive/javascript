@@ -1046,7 +1046,7 @@ glob-parent@^2.0.0:
   dependencies:
     is-glob "^2.0.0"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5:
+glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.0.6:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -1343,15 +1343,16 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-lerna@2.0.0-beta.30:
-  version "2.0.0-beta.30"
-  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.0.0-beta.30.tgz#517b54f211f74d8899a42d8e03fdbe311fbe6e2a"
+lerna@^2.0.0-beta.32:
+  version "2.0.0-beta.32"
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.0.0-beta.32.tgz#67d51b1520ce57a27b8445160726b48f6dba3f1c"
   dependencies:
     async "^1.5.0"
     chalk "^1.1.1"
     cmd-shim "^2.0.2"
     command-join "^1.1.1"
     cross-spawn "^4.0.0"
+    glob "^7.0.6"
     inquirer "^0.12.0"
     lodash.find "^4.3.0"
     lodash.unionwith "^4.2.0"
