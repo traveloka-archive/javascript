@@ -41,6 +41,8 @@ function log(report) {
     opts.reporter = 'compact';
   }
 
+  process.stdout.write(marlint.getFormatter(opts.reporter)(report.results));
+
   if (opts.json) {
     const eslintJson = require.resolve('eslint-json');
     const result = marlint.getFormatter(eslintJson)(report.results);
@@ -51,8 +53,6 @@ function log(report) {
     } else {
       process.stdout.write(result);
     }
-  } else {
-    process.stdout.write(marlint.getFormatter(opts.reporter)(report.results));
   }
 
   process.exit(report.errorCount === 0 ? 0 : 1);
