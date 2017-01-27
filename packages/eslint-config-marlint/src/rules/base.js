@@ -16,9 +16,9 @@ module.exports = {
     // http://eslint.org/docs/rules/no-console
     'no-console': 'warn',
 
-    // Make sure all variables are used, except function parameters
+    // Make sure all variables are used, except some function parameters
     // http://eslint.org/docs/rules/no-unused-vars
-    'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
+    'no-unused-vars': ['error', { vars: 'all', args: 'after-used' }],
 
     // Prevent accidental negation error
     // http://eslint.org/docs/rules/no-unsafe-negation
@@ -34,27 +34,27 @@ module.exports = {
 
     // Always add default case in switch statements
     // http://eslint.org/docs/rules/default-case
-    'default-case': 'warn',
+    'default-case': ['error', { commentPattern: '^no default$' }],
 
     // Always use dot notation when accessing object prop except for reserved word
     // http://eslint.org/docs/rules/dot-notation
     'dot-notation': ['error', { allowKeywords: true }],
 
-    // Always use strict equality
+    // Always use strict equality, except some cases like null
     // http://eslint.org/docs/rules/eqeqeq
-    'eqeqeq': 'error',
+    'eqeqeq': ['error', 'smart'],
 
-    // Return early, reduce cyclomatic complexity
+    // Return early, reduce cyclomatic complexity and indent level
     // http://eslint.org/docs/rules/no-else-return
-    'no-else-return': 'warn',
+    'no-else-return': 'error',
 
     // Put comment inside of empty function
     // http://eslint.org/docs/rules/no-empty-function
     'no-empty-function': 'error',
 
-    // Always compare null with strict equality
+    // Allow short circuit with null and undefined
     // http://eslint.org/docs/rules/no-eq-null
-    'no-eq-null': 'error',
+    'no-eq-null': 'off',
 
     // Eval is evil
     // http://eslint.org/docs/rules/no-eval
@@ -69,18 +69,18 @@ module.exports = {
     // http://eslint.org/docs/rules/no-extra-bind
     'no-extra-bind': 'error',
 
-    // Never re-assign global variables, unless necessary (e.g test mock)
+    // Never re-assign global variables
     // http://eslint.org/docs/rules/no-global-assign
-    'no-global-assign': 'warn',
+    'no-global-assign': 'error',
 
-    // Use type casting instead of coercion
+    // Use type casting instead of coercion, with the exception of boolean
     // http://eslint.org/docs/rules/no-implicit-coercion
-    'no-implicit-coercion': 'error',
-
-    // Always use `this` inside class-like object
-    // DISABLED because can't detect ES7 class property
-    // http://eslint.org/docs/rules/no-invalid-this
-    'no-invalid-this': 'off',
+    'no-implicit-coercion': ['error', {
+      boolean: false,
+      number: true,
+      string: true,
+      allow: [],
+    }],
 
     // Don't create function inside loop
     // http://eslint.org/docs/rules/no-loop-func
@@ -93,11 +93,11 @@ module.exports = {
 
     // Remove useless space, unless for object property alignment
     // http://eslint.org/docs/rules/no-multi-spaces
-    'no-multi-spaces': ['error', { exceptions: { Property: true } }],
+    'no-multi-spaces': 'error',
 
-    // Don't modify function arguments directly if convenient
+    // Don't modify function arguments directly for predictability and perf
     // http://eslint.org/docs/rules/no-param-reassign
-    'no-param-reassign': 'off',
+    'no-param-reassign': ['error', { props: true }],
 
     // Do not use assignment on return value
     // http://eslint.org/docs/rules/no-return-assign
@@ -299,9 +299,9 @@ module.exports = {
     // http://eslint.org/docs/rules/quote-props
     'quote-props': ['error', 'consistent-as-needed'],
 
-    // Use single quote
+    // Use single quote, with exception to avoid escaping quote inside string
     // http://eslint.org/docs/rules/quotes
-    'quotes': ['error', 'single'],
+    'quotes': ['error', 'single', { avoidEscape: true }],
 
     // Do not use space before semicolon
     // http://eslint.org/docs/rules/semi-spacing

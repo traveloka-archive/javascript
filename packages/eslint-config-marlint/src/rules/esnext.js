@@ -37,6 +37,11 @@ module.exports = {
     // http://eslint.org/docs/rules/object-shorthand
     'object-shorthand': 'warn',
 
+    // Only use `this` inside method
+    // http://eslint.org/docs/rules/no-invalid-this
+    'no-invalid-this': 'off',
+    'babel/no-invalid-this': 'error',
+
     // Arrow functions must be wrapped in parens
     // http://eslint.org/docs/rules/arrow-parens
     'arrow-parens': ['warn', 'as-needed'],

@@ -14,7 +14,32 @@ function runEslint(file) {
   return new Promise(resolve => {
     exec(`${eslintPath} ${eslintJsonFormat} ${eslintCustomConfig} ${file}`, { encoding: 'utf-8' }, (_, stdout, stderr) => {
       const result = JSON.parse(stdout);
-      resolve(result[0].messages);
+      resolve(result[0].messages.sort((m1, m2) => {
+        // sort by line number first
+        if (m1.line > m2.line) {
+          return 1;
+        }
+
+        if (m1.line < m2.line) {
+          return -1;
+        }
+
+        // same line number, sort by column
+        if (m1.column > m2.column) {
+          return 1;
+        }
+
+        if (m1.column < m2.column) {
+          return -1;
+        }
+
+        // same line number, same column, sort by rule id
+        if (m1.ruleId > m2.ruleId) {
+          return 1;
+        }
+
+        return -1;
+      }));
     });
   });
 }

@@ -37,6 +37,7 @@ class Block extends React.Component {
 
   // babel/arrow-parens
   // no-empty-function
+  // no-unused-vars
   onClick = (e) => {
   }
 
@@ -71,7 +72,7 @@ x.run(
   // func-names
   function (req, res, next) {
     // - react/react-in-jsx-scope
-    render(<Block hello={myText} {...rest} />);
+    render(<Block hello={myText} {...rest} next={next} />);
   },
   cb => {
     // curly
@@ -80,7 +81,7 @@ x.run(
     return cb();
   },
   async (err, cb) => {
-    throw err;
+    !err && cb();
   }
 );
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Search extends React.Component {
   handleClick = e => {
-    // Empty function with comment is allowed
+    this.doSomething(e);
   }
 
   render() {
