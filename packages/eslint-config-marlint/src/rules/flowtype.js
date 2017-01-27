@@ -1,5 +1,10 @@
 module.exports = {
   plugins: ['flowtype'],
+  settings: {
+    flowtype: {
+      onlyFilesWithFlowAnnotation: true,
+    },
+  },
   rules: {
     // Use bool for boolean type
     'flowtype/boolean-style': ['error', 'bool'],
@@ -39,8 +44,8 @@ module.exports = {
       excludeArrowFunctions: true,
     }],
 
-    // Always put @flow on top of the file to enable
-    'flowtype/require-valid-file-annotation': 'error',
+    // No need to enforce specific flow annotation style
+    'flowtype/require-valid-file-annotation': 'off',
 
     // flow already has type inference,
     // this also can't detect function declaration via const
