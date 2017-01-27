@@ -16,7 +16,6 @@ const DEPRECATED_RULES = [
 
 // TODO(fatih) remove this
 const IGNORED_RULES = [
-  'babel/no-invalid-this',
   'flowtype/boolean-style',
   'flowtype/define-flow-type',
   'flowtype/delimiter-dangle',
@@ -37,9 +36,6 @@ const IGNORED_RULES = [
   'flowtype/union-intersection-spacing',
   'flowtype/use-flow-type',
   'flowtype/valid-syntax',
-  'react/jsx-tag-spacing',
-  'react/no-array-index-key',
-  'react/require-default-props',
 ];
 
 // Prints rules recognized by ESLint that don't appear in the given config

@@ -247,5 +247,17 @@ module.exports = {
       assignment: true,
       return: true,
     }],
+
+    // Put space before self closing component
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-tag-spacing.md
+    'react/jsx-tag-spacing': 'error',
+
+    // Never use array index as key
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+    'react/no-array-index-key': 'error',
+
+    // No need to add default props
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+    'react/require-default-props': 'off',
   },
 };
