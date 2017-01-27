@@ -2,16 +2,17 @@
 import { render } from 'react-dom';
 
 // Flow type declaration should be allowed
+type ReactElement = { type: string, props: Object };
 type PropTypesViaFlowTypes = {
   // react/no-unused-prop-types
-  text?: ?string
+  text?: ?string,
 };
 
 type BlockProps = {
   // babel/flow-object-type
   hello: string;
   // react/no-unused-prop-types
-  world: string
+  world: string,
 };
 
 // arrow-body-style
@@ -35,7 +36,7 @@ const Unused = (props: PropTypesViaFlowTypes) => {
 class Block extends React.Component {
   props: BlockProps;
 
-  // babel/arrow-parens
+  // arrow-parens
   // no-empty-function
   // no-unused-vars
   onClick = (e) => {
@@ -59,7 +60,7 @@ var text: string = 'random';
 text += 'a';
 
 // prefer-const
-let x = {
+let x: Object = {
   // babel/object-shorthand
   // comma-dangle
   text: text
@@ -70,7 +71,7 @@ const { text: myText, ...rest } = x;
 x.run(
   // prefer-arrow-callback
   // func-names
-  function (req, res, next) {
+  function (req: Object, res: Object, next: () => void): ReactElement {
     // - react/react-in-jsx-scope
     render(<Block hello={myText} {...rest} next={next} />);
   },

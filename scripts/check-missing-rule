@@ -12,29 +12,6 @@ const DEPRECATED_RULES = [
   'babel/arrow-parens',
   'babel/flow-object-type',
   'babel/func-params-comma-dangle',
-];
-
-// TODO(fatih) remove this
-const IGNORED_RULES = [
-  'flowtype/boolean-style',
-  'flowtype/define-flow-type',
-  'flowtype/delimiter-dangle',
-  'flowtype/generic-spacing',
-  'flowtype/no-dupe-keys',
-  'flowtype/no-primitive-constructor-types',
-  'flowtype/no-weak-types',
-  'flowtype/require-parameter-type',
-  'flowtype/require-return-type',
-  'flowtype/require-valid-file-annotation',
-  'flowtype/require-variable-type',
-  'flowtype/semi',
-  'flowtype/sort-keys',
-  'flowtype/space-after-type-colon',
-  'flowtype/space-before-generic-bracket',
-  'flowtype/space-before-type-colon',
-  'flowtype/type-id-match',
-  'flowtype/union-intersection-spacing',
-  'flowtype/use-flow-type',
   'flowtype/valid-syntax',
 ];
 
@@ -45,8 +22,7 @@ const specifiedFile = process.argv[2];
 const ruleFinder = getRuleFinder(specifiedFile);
 
 const missingRules = ruleFinder.getUnusedRules()
-.filter(rule => DEPRECATED_RULES.indexOf(rule) === -1)
-.filter(rule => IGNORED_RULES.indexOf(rule) === -1);
+.filter(rule => DEPRECATED_RULES.indexOf(rule) === -1);
 
 if (missingRules.length) {
   console.log(`New rules to add to the config: ${missingRules.join(', ')}.`);
