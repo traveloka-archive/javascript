@@ -19,12 +19,6 @@ Array [
     "severity": 1,
   },
   Object {
-    "column": 24,
-    "line": 19,
-    "ruleId": "arrow-body-style",
-    "severity": 1,
-  },
-  Object {
     "column": 10,
     "line": 21,
     "ruleId": "react/react-in-jsx-scope",
@@ -40,7 +34,7 @@ Array [
     "column": 16,
     "line": 27,
     "ruleId": "react/no-multi-comp",
-    "severity": 2,
+    "severity": 1,
   },
   Object {
     "column": 10,
@@ -58,7 +52,7 @@ Array [
     "column": 1,
     "line": 36,
     "ruleId": "react/no-multi-comp",
-    "severity": 2,
+    "severity": 1,
   },
   Object {
     "column": 21,
@@ -71,12 +65,6 @@ Array [
     "line": 42,
     "ruleId": "arrow-parens",
     "severity": 1,
-  },
-  Object {
-    "column": 14,
-    "line": 42,
-    "ruleId": "no-unused-vars",
-    "severity": 2,
   },
   Object {
     "column": 20,

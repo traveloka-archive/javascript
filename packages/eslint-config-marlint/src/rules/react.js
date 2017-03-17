@@ -65,9 +65,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-is-mounted.md
     'react/no-is-mounted': 'error',
 
-    // Use single file per component
+    // Multiple component inside one file is sometimes useful
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
-    'react/no-multi-comp': 'error',
+    'react/no-multi-comp': 'warn',
 
     // Do not use return value from React.render as it's a bad practice
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md
@@ -100,9 +100,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md
     'react/prefer-es6-class': 'error',
 
-    // Use stateless functional component on presentational component
+    // Changing function component to class component back and forth is painful
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md
-    'react/prefer-stateless-function': 'warn',
+    'react/prefer-stateless-function': 'off',
 
     // propTypes definition in React Component is helpful
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md
@@ -124,20 +124,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
     'react/self-closing-comp': 'warn',
 
-    // Sort React lifecycle method
+    // Sorting class method is just minor convenience
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
-    'react/sort-comp': ['warn', {
-      order: [
-        '/props|context/',
-        'static-methods',
-        'lifecycle',
-        '/^on.+$/',
-        '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/',
-        'everything-else',
-        '/^render.+$/',
-        'render',
-      ],
-    }],
+    'react/sort-comp': 'off',
 
     // Not really useful, as we keep prop as minimum as possible
     // similar function params count
@@ -168,9 +157,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
 
-    // Use consistent placing of prop assignment
+    // Disabled, covered in prettier
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-first-prop-new-line.md
-    'react/jsx-first-prop-new-line': ['warn', 'multiline'],
+    'react/jsx-first-prop-new-line': 'off',
 
     // Use handle prefix on event handler, except handler passed as prop
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-handler-names.md
@@ -183,9 +172,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-indent.md
     'react/jsx-indent': ['error', INDENT_TYPE],
 
-    // Use same indentation as JS styleguide for props indent
+    // Disabled, covered by prettier
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-indent-props.md
-    'react/jsx-indent-props': ['error', INDENT_TYPE],
+    'react/jsx-indent-props': 'off',
 
     // Always use key prop in array component
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
@@ -215,10 +204,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-literals.md
     'react/jsx-no-literals': 'warn',
 
-    // Warn about security issue in target='_blank'
+    // Prevent security issue in target='_blank' (https://mathiasbynens.github.io/rel-noopener)
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md
-    // https://mathiasbynens.github.io/rel-noopener
-    'react/jsx-no-target-blank': 'warn',
+    'react/jsx-no-target-blank': 'error',
 
     // No undefined React Component
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-undef.md
@@ -252,9 +240,9 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-tag-spacing.md
     'react/jsx-tag-spacing': 'error',
 
-    // Never use array index as key
+    // Server rendered react component doesn't care about using array index as key
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
-    'react/no-array-index-key': 'error',
+    'react/no-array-index-key': 'off',
 
     // No need to add default props
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md

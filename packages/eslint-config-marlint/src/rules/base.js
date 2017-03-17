@@ -16,9 +16,9 @@ module.exports = {
     // http://eslint.org/docs/rules/no-console
     'no-console': 'warn',
 
-    // Make sure all variables are used, except some function parameters
+    // Make sure all variables are used, except function arguments
     // http://eslint.org/docs/rules/no-unused-vars
-    'no-unused-vars': ['error', { vars: 'all', args: 'after-used' }],
+    'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
 
     // Prevent accidental negation error
     // http://eslint.org/docs/rules/no-unsafe-negation
@@ -95,13 +95,13 @@ module.exports = {
     // http://eslint.org/docs/rules/no-multi-spaces
     'no-multi-spaces': 'error',
 
-    // Don't modify function arguments directly for predictability and perf
+    // Don't reassign function arguments directly for predictability and perf
     // http://eslint.org/docs/rules/no-param-reassign
-    'no-param-reassign': ['error', { props: true }],
+    'no-param-reassign': ['error', { props: false }],
 
     // Do not use assignment on return value
     // http://eslint.org/docs/rules/no-return-assign
-    'no-return-assign': 'warn',
+    'no-return-assign': ['warn', 'except-parens'],
 
     // Refrain from using `javascript:` because of perf issue
     // http://eslint.org/docs/rules/no-script-url
@@ -232,16 +232,11 @@ module.exports = {
 
     // Prevent nesting hell
     // http://eslint.org/docs/rules/max-depth
-    'max-depth': ['error', MAX_DEPTH],
+    'max-depth': ['warn', MAX_DEPTH],
 
-    // Do not write long inline code. Comment, strings, and urls are excluded
+    // Disabled, covered in prettier
     // http://eslint.org/docs/rules/max-len
-    'max-len': ['warn', {
-      code: MAX_CODE_LENGTH,
-      ignoreComments: true,
-      ignoreUrls: true,
-      ignoreStrings: true,
-    }],
+    'max-len': 'off',
 
     // Prevent callback hell
     // http://eslint.org/docs/rules/max-nested-callbacks
@@ -335,9 +330,9 @@ module.exports = {
     // http://eslint.org/docs/rules/spaced-comment
     'spaced-comment': ['warn', 'always'],
 
-    // No useless block on arrow function
+    // No need to enforce styling in arrow function body
     // http://eslint.org/docs/rules/arrow-body-style
-    'arrow-body-style': ['warn', 'as-needed'],
+    'arrow-body-style': 'off',
 
     // Add space before & after arrow in arrow function
     // http://eslint.org/docs/rules/arrow-spacing

@@ -29,7 +29,7 @@ module.exports = {
 
     // No useless # href on anchor tag
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/href-no-hash.md
-    'jsx-a11y/href-no-hash': ['warn'],
+    'jsx-a11y/href-no-hash': 'warn',
 
     // HTML tag must contains lang property
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/html-has-lang.md
@@ -43,9 +43,9 @@ module.exports = {
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md
     'jsx-a11y/img-redundant-alt': 'warn',
 
-    // Label ideally have an htmlFor prop
+    // Not really useful
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
-    'jsx-a11y/label-has-for': 'warn',
+    'jsx-a11y/label-has-for': 'off',
 
     // HTML lang must have valid value
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/lang.md
