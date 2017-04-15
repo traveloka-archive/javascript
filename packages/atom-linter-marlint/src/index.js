@@ -31,12 +31,31 @@ function lint(textEditor) {
 
   const pkg = loadJson(path.join(dir, 'package.json'));
 
+  let rootPkg = {};
+  let isLernaPkg;
+  try {
+    // if dir is repo under lerna, there is root package.json
+    // two level above dir (lernaRoot/packages/dir)
+    rootPkg = loadJson(path.join(dir, '../../package.json'));
+  } finally {
+    // it's lerna repo if it has lerna as dependencies/devDependencies
+    const lernaDep = rootPkg && rootPkg.dependencies && rootPkg.dependencies.lerna;
+    const lernaDevDep = rootPkg && rootPkg.devDependencies && rootPkg.devDependencies.lerna;
+    isLernaPkg = lernaDep || lernaDevDep;
+  }
+
   const lintAll = atom.config.get('linter-marlint.lintAll');
   if (!lintAll) {
     // only lint when `marlint` included as a dependency
     if (!(pkg.dependencies && pkg.dependencies.marlint) &&
       !(pkg.devDependencies && pkg.devDependencies.marlint)) {
-      return [];
+      if (isLernaPkg &&
+        !(rootPkg.dependencies && rootPkg.dependencies.marlint) &&
+        !(rootPkg.devDependencies && rootPkg.devDependencies.marlint)) {
+        return [];
+      } else if (!isLernaPkg) {
+        return [];
+      }
     }
   }
 
@@ -45,6 +64,8 @@ function lint(textEditor) {
     report = lintText(textEditor.getText(), {
       cwd: dir,
       filename: filePath,
+      // combine rules included in root package.json
+      ...(isLernaPkg && rootPkg.marlint),
     });
   });
 
