@@ -2,8 +2,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "publish:lib": "lerna publish",
-    "publish:atom": "./scripts/publish-atom-linter",
+    "publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap -- -y",
