@@ -19,6 +19,12 @@ Array [
     "severity": 1,
   },
   Object {
+    "column": 16,
+    "line": 19,
+    "ruleId": "flowtype/require-parameter-type",
+    "severity": 1,
+  },
+  Object {
     "column": 10,
     "line": 21,
     "ruleId": "react/react-in-jsx-scope",
@@ -67,6 +73,12 @@ Array [
     "severity": 1,
   },
   Object {
+    "column": 14,
+    "line": 42,
+    "ruleId": "flowtype/require-parameter-type",
+    "severity": 1,
+  },
+  Object {
     "column": 20,
     "line": 42,
     "ruleId": "no-empty-function",
@@ -82,12 +94,6 @@ Array [
     "column": 7,
     "line": 51,
     "ruleId": "react/react-in-jsx-scope",
-    "severity": 2,
-  },
-  Object {
-    "column": 22,
-    "line": 51,
-    "ruleId": "jsx-quotes",
     "severity": 2,
   },
   Object {
@@ -115,12 +121,6 @@ Array [
     "severity": 1,
   },
   Object {
-    "column": 13,
-    "line": 66,
-    "ruleId": "comma-dangle",
-    "severity": 2,
-  },
-  Object {
     "column": 3,
     "line": 74,
     "ruleId": "func-names",
@@ -139,10 +139,28 @@ Array [
     "severity": 2,
   },
   Object {
+    "column": 3,
+    "line": 78,
+    "ruleId": "flowtype/require-parameter-type",
+    "severity": 1,
+  },
+  Object {
     "column": 5,
     "line": 80,
     "ruleId": "curly",
     "severity": 2,
+  },
+  Object {
+    "column": 10,
+    "line": 84,
+    "ruleId": "flowtype/require-parameter-type",
+    "severity": 1,
+  },
+  Object {
+    "column": 15,
+    "line": 84,
+    "ruleId": "flowtype/require-parameter-type",
+    "severity": 1,
   },
   Object {
     "column": 1,
@@ -155,12 +173,6 @@ Array [
     "line": 93,
     "ruleId": "prefer-template",
     "severity": 1,
-  },
-  Object {
-    "column": 13,
-    "line": 93,
-    "ruleId": "quotes",
-    "severity": 2,
   },
   Object {
     "column": 40,
