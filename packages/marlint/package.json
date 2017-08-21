@@ -1,6 +1,6 @@
 {
   "name": "marlint",
-  "version": "5.0.2",
+  "version": "6.0.0",
   "description": "Javascript code linter for traveloka js styleguide",
   "license": "MIT",
   "repository": "traveloka/javascript",
@@ -47,7 +47,7 @@
     "babel-eslint": "^7.2.3",
     "deep-assign": "^2.0.0",
     "eslint": "^4.5.0",
-    "eslint-config-marlint": "^5.0.2",
+    "eslint-config-marlint": "^6.0.0",
     "eslint-json": "^2.0.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-flowtype": "^2.35.0",
