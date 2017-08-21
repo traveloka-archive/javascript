@@ -3,9 +3,9 @@
 const path = require('path');
 
 const { exec } = require('child_process');
-const eslintPath = require.resolve('../../../../node_modules/eslint/bin/eslint');
-const eslintJsonFormat = `--format=${require.resolve('../../../../node_modules/eslint-json')}`;
-const eslintCustomConfig = `-c ${require.resolve('../')}`;
+const eslintPath = require.resolve('../../node_modules/.bin/eslint');
+const eslintJsonFormat = `--format=${require.resolve('../../node_modules/eslint-json')}`;
+const eslintCustomConfig = `--config ${require.resolve('../')}`;
 
 function runEslint(file) {
   // HACK, we can't use eslint module in unit test here because using babel-eslint

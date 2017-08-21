@@ -1,4 +1,6 @@
-exports[`test block offending rule 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`block offending rule 1`] = `
 Array [
   Object {
     "column": 10,
@@ -83,12 +85,6 @@ Array [
     "line": 42,
     "ruleId": "no-empty-function",
     "severity": 2,
-  },
-  Object {
-    "column": 7,
-    "line": 51,
-    "ruleId": "jsx-a11y/onclick-has-role",
-    "severity": 1,
   },
   Object {
     "column": 7,
