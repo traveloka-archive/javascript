@@ -7,12 +7,35 @@ const DEPRECATED_RULES = [
   'react/wrap-multilines',
   // babel
   'babel/generator-star-spacing',
-  'babel/array-bracket-spacing',
   'babel/object-shorthand',
   'babel/arrow-parens',
-  'babel/flow-object-type',
   'babel/func-params-comma-dangle',
-  'flowtype/valid-syntax',
+  'babel/array-bracket-spacing',
+  'babel/flow-object-type',
+  // flowtype
+];
+
+// Rules with false positives, missing docs or no clear use case. Revisit later
+const EXPERIMENTAL_RULES = [
+  'babel/semi',
+  'jsx-a11y/accessible-emoji',
+  'jsx-a11y/aria-activedescendant-has-tabindex',
+  'jsx-a11y/media-has-caption',
+  'jsx-a11y/no-autofocus',
+  'jsx-a11y/no-distracting-elements',
+  'jsx-a11y/no-interactive-element-to-noninteractive-role',
+  'jsx-a11y/no-noninteractive-element-interactions',
+  'jsx-a11y/no-noninteractive-element-to-interactive-role',
+  'jsx-a11y/no-noninteractive-tabindex',
+  'jsx-a11y/no-redundant-roles',
+  'react/forbid-elements',
+  'react/no-redundant-should-component-update',
+  'react/no-unused-state',
+  'react/no-will-update-set-state',
+  'react/void-dom-elements-no-children',
+  'react/jsx-closing-tag-location',
+  'flowtype/no-types-missing-file-annotation',
+  'flowtype/require-return-type',
 ];
 
 // Prints rules recognized by ESLint that don't appear in the given config
@@ -22,7 +45,8 @@ const specifiedFile = process.argv[2];
 const ruleFinder = getRuleFinder(specifiedFile);
 
 const missingRules = ruleFinder.getUnusedRules()
-.filter(rule => DEPRECATED_RULES.indexOf(rule) === -1);
+.filter(rule => DEPRECATED_RULES.indexOf(rule) === -1)
+.filter(rule => EXPERIMENTAL_RULES.indexOf(rule) === -1);
 
 if (missingRules.length) {
   console.log(`New rules to add to the config: ${missingRules.join(', ')}.`);

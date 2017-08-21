@@ -238,7 +238,23 @@ module.exports = {
     'react/no-array-index-key': 'off',
 
 		// No need to add default props
-		// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+		// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-default-props.md
     'react/require-default-props': 'off',
+
+    // Use is/has prefix for boolean props
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-default-props.md
+    'react/boolean-prop-naming': 'warn',
+
+    // Prevent typos
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-typos.md
+    'react/no-typos': 'error',
+
+    // No implicit access to foreign propTypes
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-typos.md
+    'react/forbid-foreign-prop-types': 'error',
+
+    // Use flowtype to enforce this
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/default-props-match-prop-types.md
+    'react/default-props-match-prop-types': 'off',
   },
 };

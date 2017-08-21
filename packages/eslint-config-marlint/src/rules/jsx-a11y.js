@@ -73,6 +73,10 @@ module.exports = {
 		// https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/tabindex-no-positive.md
     'jsx-a11y/tabindex-no-positive': 'warn',
 
+    // Use title in iframe
+    // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/iframe-has-title.md
+    'jsx-a11y/iframe-has-title': 'error',
+
 		// Currently we don't focus much on a11y for these areas
     'jsx-a11y/no-onchange': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
