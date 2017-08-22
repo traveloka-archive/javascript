@@ -8,15 +8,13 @@
     "name": "Traveloka",
     "url": "traveloka.com"
   },
-  "main": "src/index.js",
-  "bin": "src/cli.js",
+  "bin": "cli.js",
   "scripts": {
-    "test": "exit 0"
+    "test": "jest"
   },
   "files": [
-    "src/index.js",
-    "src/cli.js",
-    "src/handle-opts.js"
+    "*.js",
+    "lib"
   ],
   "keywords": [
     "cli-app",
@@ -48,11 +46,12 @@
     "deep-assign": "^2.0.0",
     "eslint": "^4.5.0",
     "eslint-config-marlint": "^6.1.0",
+    "eslint-formatter-pretty": "^1.1.0",
     "eslint-json": "^2.0.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.2.1",
+    "eslint-plugin-react": "^7.3.0",
     "get-stdin": "^5.0.1",
     "globby": "^6.0.0",
     "meow": "^3.7.0",

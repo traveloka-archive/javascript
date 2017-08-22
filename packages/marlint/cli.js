@@ -4,6 +4,7 @@ const fs = require('fs');
 const updateNotifier = require('update-notifier');
 const getStdin = require('get-stdin');
 const meow = require('meow');
+const pretty = require('eslint-formatter-pretty');
 const marlint = require('./');
 
 const cli = meow({
@@ -37,11 +38,7 @@ const input = cli.input;
 const opts = cli.flags;
 
 function log(report) {
-  if (opts.compact) {
-    opts.reporter = 'compact';
-  }
-
-  process.stdout.write(marlint.getFormatter(opts.reporter)(report.results));
+  const output = pretty(report.results);
 
   if (opts.json) {
     const eslintJson = require.resolve('eslint-json');
@@ -50,11 +47,10 @@ function log(report) {
     if (opts.jsonOutputFile) {
       fs.writeFileSync(opts.jsonOutputFile, result);
       process.stdout.write(`Test results written to: ${opts.jsonOutputFile}`);
-    } else {
-      process.stdout.write(result);
     }
   }
 
+  process.stdout.write(output);
   process.exit(report.errorCount === 0 ? 0 : 1);
 }
 
