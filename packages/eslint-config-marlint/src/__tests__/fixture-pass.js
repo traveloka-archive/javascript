@@ -5,8 +5,13 @@ function a(e) {
 }
 
 export default class Search extends React.Component {
+  requestReceived(req, res, next) {
+    return true;
+  }
+
   handleClick = e => {
-    this.doSomething(e, a);
+    const { x, y, ...z } = e;
+    this.doSomething(z, e, a);
   }
 
   render() {

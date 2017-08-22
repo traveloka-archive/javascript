@@ -39,12 +39,6 @@ Array [
     "severity": 2,
   },
   Object {
-    "column": 16,
-    "line": 27,
-    "ruleId": "react/no-multi-comp",
-    "severity": 1,
-  },
-  Object {
     "column": 10,
     "line": 31,
     "ruleId": "react/react-in-jsx-scope",
@@ -54,12 +48,6 @@ Array [
     "column": 33,
     "line": 31,
     "ruleId": "react/prop-types",
-    "severity": 1,
-  },
-  Object {
-    "column": 1,
-    "line": 36,
-    "ruleId": "react/no-multi-comp",
     "severity": 1,
   },
   Object {

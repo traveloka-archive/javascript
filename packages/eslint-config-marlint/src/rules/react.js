@@ -59,7 +59,7 @@ module.exports = {
 
 		// Multiple component inside one file is sometimes useful
 		// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
-    'react/no-multi-comp': 'warn',
+    'react/no-multi-comp': 'off',
 
 		// Do not use return value from React.render as it's a bad practice
 		// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md
@@ -256,5 +256,25 @@ module.exports = {
     // Use flowtype to enforce this
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/default-props-match-prop-types.md
     'react/default-props-match-prop-types': 'off',
+
+    // Do not forbid element
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-elements.md
+    'react/forbid-elements': 'off',
+
+    // No need to use shouldComponentUpdate on React.PureComponent
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-redundant-should-component-update.md
+    'react/no-redundant-should-component-update': 'error',
+
+    // Prevent adding children in self-closing-comp
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md
+    'react/void-dom-elements-no-children': 'error',
+
+    // Multiline component with children should align their closing tag
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-tag-location.md
+    'react/jsx-closing-tag-location': 'error',
+
+    // No setState on componentWillUpdate
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-will-update-set-state.md
+    'react/no-will-update-set-state': 'error',
   },
 };
