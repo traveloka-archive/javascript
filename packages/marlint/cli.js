@@ -37,7 +37,11 @@ updateNotifier({ pkg: cli.pkg }).notify();
 const input = cli.input;
 const opts = cli.flags;
 
-function log(report) {
+marlint.lintFiles(input, opts).then(report => {
+  if (opts.fix) {
+    marlint.outputFixes(report);
+  }
+
   const output = pretty(report.results);
 
   if (opts.json) {
@@ -52,49 +56,4 @@ function log(report) {
 
   process.stdout.write(output);
   process.exit(report.errorCount === 0 ? 0 : 1);
-}
-
-// `marlint -` => `marlint --stdin`
-if (input[0] === '-') {
-  opts.stdin = true;
-  input.shift();
-}
-
-function isErrorMessage(message) {
-  return message.severity === 2;
-}
-
-function surpressWarning(results) {
-  const filtered = [];
-
-  results.forEach(result => {
-    const filteredMessages = result.messages.filter(isErrorMessage);
-
-    if (filteredMessages.length > 0) {
-      filtered.push({
-        filePath: result.filePath,
-        messages: filteredMessages,
-      });
-    }
-  });
-
-  return filtered;
-}
-
-if (opts.stdin) {
-  getStdin().then(str => {
-    log(marlint.lintText(str, opts));
-  });
-} else {
-  marlint.lintFiles(input, opts).then(report => {
-    if (opts.fix) {
-      marlint.outputFixes(report);
-    }
-
-    if (opts.quiet) {
-      report.results = surpressWarning(report.results);
-    }
-
-    log(report);
-  });
-}
+});
