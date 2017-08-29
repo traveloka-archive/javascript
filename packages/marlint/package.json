@@ -52,12 +52,18 @@
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.3.0",
-    "get-stdin": "^5.0.1",
     "globby": "^6.0.0",
     "meow": "^3.7.0",
-    "object-assign": "^4.1.0",
+    "minimatch": "^3.0.4",
     "pkg-conf": "^2.0.0",
     "update-notifier": "^2.2.0"
+  },
+  "marlint": {
+    "rules": {
+      "no-console": 0,
+      "no-empty": 0,
+      "no-sync": 0
+    }
   },
   "devDependencies": {
     "jest": "^20.0.4"

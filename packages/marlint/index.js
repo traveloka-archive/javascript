@@ -2,8 +2,9 @@
 'use strict';
 const eslint = require('eslint');
 const globby = require('globby');
+const minimatch = require('minimatch');
 const pkgConf = require('pkg-conf');
-const getEslintConfig = require('./lib/getEslintConfig');
+const getOptionsForPath = require('./lib/getOptionsForPath');
 const getMultiPaths = require('./lib/getMultiPaths');
 
 const DEFAULT_IGNORES = [
@@ -32,26 +33,40 @@ function mergeReports(reports) {
   return {
     errorCount,
     warningCount,
-    results
+    results,
   };
 }
 
 function processReport(report, opts) {
-  report.results = opts.quiet ? eslint.CLIEngine.getErrorResults(report.results) : report.results;
+  report.results = opts.quiet
+    ? eslint.CLIEngine.getErrorResults(report.results)
+    : report.results;
   return report;
 }
 
-function runEslint(paths, opts) {
-  const config = getEslintConfig(opts);
-  const engine = new eslint.CLIEngine(config);
-  const report = engine.executeOnFiles(paths, config);
+function runEslint(paths, options) {
+  const ignores = options.marlint.ignores;
 
-  return processReport(report, opts);
+  if (ignores) {
+    // eslint-disable-next-line no-param-reassign
+    paths = paths.filter(path => {
+      return !ignores.some(pattern => minimatch(path, pattern));
+    });
+  }
+
+  const engine = new eslint.CLIEngine(options.eslint);
+  const report = engine.executeOnFiles(paths, options.eslint);
+
+  return processReport(report, options);
 }
 
 exports.lintText = function lintText(str, opts) {
-  const engine = new eslint.CLIEngine(getEslintConfig(opts));
-  return engine.executeOnText(str, opts.filename);
+  const path = opts.filename;
+  const runtimeOptions = { quiet: opts.quiet, fix: opts.fix };
+  const options = getOptionsForPath(path, runtimeOptions);
+
+  const engine = new eslint.CLIEngine(options.eslint);
+  return engine.executeOnText(str, path);
 };
 
 exports.lintFiles = function lintFiles(patterns, opts) {
@@ -66,11 +81,14 @@ exports.lintFiles = function lintFiles(patterns, opts) {
   return globby(glob, { ignore }).then(paths => {
     if (paths.find(path => path.includes('packages/'))) {
       // lerna monorepo
-      const multiPaths = getMultiPaths(paths);
-      return mergeReports(multiPaths.map(paths => runEslint(paths, opts)));
+      const multiPaths = getMultiPaths(paths, opts);
+      return mergeReports(
+        multiPaths.map(pkg => runEslint(pkg.paths, pkg.options))
+      );
     }
 
-    return runEslint(paths, opts);
+    const options = getOptionsForPath(paths[0], opts);
+    return runEslint(paths, options);
   });
 };
 

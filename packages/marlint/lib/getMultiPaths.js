@@ -1,8 +1,10 @@
+const getOptionsForPath = require('./getOptionsForPath');
+
 /**
  * Convert list of path for lerna monorepo into array of array containing the
  * path grouped by its package name
  */
-const getMultiPaths = paths => {
+const getMultiPaths = (paths, options) => {
   const multiPathMap = {};
   const multiPaths = [];
   let index = 0;
@@ -25,8 +27,11 @@ const getMultiPaths = paths => {
     multiPaths[pushIndex].push(path);
   });
 
-  return multiPaths;
+  // return paths with their merged config
+  return multiPaths.map(paths => ({
+    paths,
+    options: getOptionsForPath(paths[0], options),
+  }));
 };
-
 
 module.exports = getMultiPaths;

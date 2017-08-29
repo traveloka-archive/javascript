@@ -1,4 +1,3 @@
-const SPACE_COUNT = 2;
 const MAX_DEPTH = 4;
 const MAX_PARAMS = 4;
 
@@ -19,12 +18,15 @@ module.exports = {
 
     // Make sure all variables are used, except function arguments
     // http://eslint.org/docs/rules/no-unused-vars
-    'no-unused-vars': ['error', {
-      vars: 'all',
-      args: 'none',
-      ignoreRestSiblings: true,
-      argsIgnorePattern: '^_',
-    }],
+    'no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'none',
+        ignoreRestSiblings: true,
+        argsIgnorePattern: '^_',
+      },
+    ],
 
     // Prevent accidental negation error
     // http://eslint.org/docs/rules/no-unsafe-negation

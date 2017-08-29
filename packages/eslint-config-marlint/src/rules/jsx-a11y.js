@@ -37,9 +37,12 @@ module.exports = {
 
     // Element with alternative text support should provide it
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md
-    'jsx-a11y/alt-text': ['warn', {
-      elements: ['img', 'input[type="image"]'],
-    }],
+    'jsx-a11y/alt-text': [
+      'warn',
+      {
+        elements: ['img', 'input[type="image"]'],
+      },
+    ],
 
     // No need to use image/photo as alt
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md
