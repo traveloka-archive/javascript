@@ -7,7 +7,12 @@
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap -- -y",
     "test": "lerna run test",
-    "check-rules": "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js"
+    "precommit": "lint-staged",
+    "check-rules":
+      "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js"
+  },
+  "lint-staged": {
+    "*.js": ["prettier --trailing-comma es5 --single-quote --write", "git add"]
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -19,6 +24,9 @@
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.2.1",
-    "lerna": "^2.0.0-beta.34"
+    "husky": "^0.14.3",
+    "lerna": "^2.0.0-beta.34",
+    "lint-staged": "^4.0.4",
+    "prettier": "^1.6.0"
   }
 }
