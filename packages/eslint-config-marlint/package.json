@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-marlint",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "ESLint shareable config for Marlint",
   "main": "src/index.js",
   "scripts": {
@@ -44,7 +44,9 @@
     "url": "https://github.com/traveloka/javascript/issues"
   },
   "marlint": {
-    "ignores": ["fixture-error.js"]
+    "ignores": [
+      "fixture-error.js"
+    ]
   },
   "homepage": "https://github.com/traveloka/javascript/packages/eslint-config-marlint#readme",
   "devDependencies": {
