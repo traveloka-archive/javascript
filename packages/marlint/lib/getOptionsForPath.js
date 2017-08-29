@@ -2,8 +2,9 @@ const deepAssign = require('deep-assign');
 const path = require('path');
 
 function getOptionsForPath(filePath, options) {
+  const cwd = options.cwd || process.cwd();
   const absolutePath =
-    filePath.charAt(0) === '/' ? path : path.resolve(process.cwd(), filePath);
+    filePath.charAt(0) === '/' ? filePath : path.resolve(cwd, filePath);
 
   if (absolutePath.indexOf('packages') === -1) {
     // non lerna package
