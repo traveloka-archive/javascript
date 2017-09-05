@@ -80,7 +80,7 @@ exports.lintFiles = function lintFiles(patterns, opts) {
 
   return globby(glob, { ignore }).then(paths => {
     if (paths.find(path => path.includes('packages/'))) {
-      // lerna monorepo
+      // lerna monorepo with possible options difference for each package
       const multiPaths = getMultiPaths(paths, opts);
       return mergeReports(
         multiPaths.map(pkg => runEslint(pkg.paths, pkg.options))

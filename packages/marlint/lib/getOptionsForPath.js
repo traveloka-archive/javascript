@@ -1,64 +1,47 @@
-const deepAssign = require('deep-assign');
+const pkgConf = require('pkg-conf');
+const merge = require('lodash.merge');
 const path = require('path');
 
-function getOptionsForPath(filePath, options) {
-  const cwd = options.cwd || process.cwd();
-  const absolutePath =
-    filePath.charAt(0) === '/' ? filePath : path.resolve(cwd, filePath);
-
-  if (absolutePath.indexOf('packages') === -1) {
-    // non lerna package
-    return {
-      marlint: {
-        ignores: [],
-      },
-      eslint: {
-        useEslintrc: false,
-        baseConfig: {
-          extends: 'marlint',
-        },
-        quiet: Boolean(options.quiet),
-        fix: Boolean(options.fix),
-      },
-    };
-  }
-
-  let packageConfig = {};
-  let rootConfig = {};
-
-  // /User/fatih/work/web/packages/path/to/file.js
-  const splitPath = absolutePath.split('/packages/');
-
-  try {
-    const packageName = splitPath[1].split('/')[0];
-    const packageJsonPath = `${splitPath[0]}/packages/${packageName}/package.json`;
-    const json = require(packageJsonPath);
-    packageConfig = json.marlint || {};
-  } catch (err) {}
-
-  try {
-    const rootJsonPath = `${splitPath[0]}/package.json`;
-    const json = require(rootJsonPath);
-    rootConfig = json.marlint || {};
-  } catch (err) {}
-
-  const mergedConfig = deepAssign(packageConfig, rootConfig);
-
+function buildOptions(packageOptions, runtimeOptions) {
   return {
     marlint: {
-      ignores: mergedConfig.ignores,
+      ignores: packageOptions.ignores || [],
     },
     eslint: {
       useEslintrc: false,
       baseConfig: {
         extends: 'marlint',
       },
-      rules: mergedConfig.rules || {},
-      globals: mergedConfig.globals || [],
-      quiet: Boolean(options.quiet),
-      fix: Boolean(options.fix),
+      rules: packageOptions.rules || {},
+      globals: packageOptions.globals || [],
+      quiet: Boolean(runtimeOptions.quiet),
+      fix: Boolean(runtimeOptions.fix),
     },
   };
+}
+
+function getOptionsForPath(filePath, runtimeOptions) {
+  const cwd = runtimeOptions.cwd || process.cwd();
+  const absolutePath =
+    filePath.charAt(0) === '/' ? filePath : path.resolve(cwd, filePath);
+
+  if (absolutePath.indexOf('/packages/') === -1) {
+    // Not a lerna package, use single package.json
+    const packageOptions = pkgConf.sync('marlint', { cwd });
+    return buildOptions(packageOptions, runtimeOptions);
+  }
+
+  // Get lerna root directory and package root directory to find specific config
+  // in package.json. Package specific config will overrides root specific config
+  const [rootLernaDir, relativeFilePath] = absolutePath.split('/packages/');
+  const [packageName, ..._] = relativeFilePath.split('/');
+  const packageDir = `${rootLernaDir}/packages/${packageName}`;
+
+  const packageConfig = pkgConf.sync('marlint', { cwd: packageDir });
+  const rootConfig = pkgConf.sync('marlint', { cwd: rootLernaDir });
+  const packageOptions = merge({}, rootConfig, packageConfig);
+
+  return buildOptions(packageOptions, runtimeOptions);
 }
 
 module.exports = getOptionsForPath;
