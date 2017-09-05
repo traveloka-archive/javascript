@@ -35,9 +35,10 @@ each package directory.
 
 ## Editor Integration
 
-Currently there's only one editor integration which is [`atom-linter-marlint`](https://github.com/traveloka/atom-linter-marlint).
+- [Atom](https://github.com/traveloka/atom-linter-marlint)
+- [VSCode](https://github.com/traveloka/vscode-marlint)
 
-For other editor, you can install `marlint` globally, then use eslint config from `marlint` using standard eslint editor plugin
+For other editor, you can install `marlint` globally, then use eslint config from `marlint` using standard eslint editor plugin.
 
 ## License
 
