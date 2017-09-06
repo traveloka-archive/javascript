@@ -37,8 +37,8 @@ function mergeReports(reports) {
   };
 }
 
-function processReport(report, opts) {
-  report.results = opts.quiet
+function processReport(report, options) {
+  report.results = options.eslint.quiet
     ? eslint.CLIEngine.getErrorResults(report.results)
     : report.results;
   return report;
