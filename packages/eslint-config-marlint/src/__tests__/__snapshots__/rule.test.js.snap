@@ -9,12 +9,6 @@ Array [
     "severity": 1,
   },
   Object {
-    "column": 16,
-    "line": 13,
-    "ruleId": "flowtype/object-type-delimiter",
-    "severity": 2,
-  },
-  Object {
     "column": 10,
     "line": 15,
     "ruleId": "react/no-unused-prop-types",
@@ -55,12 +49,6 @@ Array [
     "line": 36,
     "ruleId": "no-undef",
     "severity": 2,
-  },
-  Object {
-    "column": 13,
-    "line": 42,
-    "ruleId": "arrow-parens",
-    "severity": 1,
   },
   Object {
     "column": 14,
@@ -129,12 +117,6 @@ Array [
     "severity": 1,
   },
   Object {
-    "column": 5,
-    "line": 80,
-    "ruleId": "curly",
-    "severity": 2,
-  },
-  Object {
     "column": 10,
     "line": 84,
     "ruleId": "flowtype/require-parameter-type",
@@ -157,12 +139,6 @@ Array [
     "line": 93,
     "ruleId": "prefer-template",
     "severity": 1,
-  },
-  Object {
-    "column": 40,
-    "line": 93,
-    "ruleId": "semi",
-    "severity": 2,
   },
 ]
 `;
