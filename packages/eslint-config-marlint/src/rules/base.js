@@ -1,13 +1,22 @@
 const MAX_DEPTH = 4;
 const MAX_PARAMS = 4;
 
+// These rules also contains babel patch, more on that can be seen here
+// https://github.com/babel/eslint-plugin-babel#rules
 module.exports = {
+  // We need babel-eslint to enable Flowtype support
+  parser: 'babel-eslint',
   env: {
     node: true,
     browser: true,
     es6: true,
     jest: true,
   },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  plugins: ['babel'],
   extends: ['eslint:recommended'],
   // All rules below are rules not exist in 'eslint:recommended'
   // http://eslint.org/docs/rules/
@@ -35,10 +44,6 @@ module.exports = {
     // Enforce return value in some array method
     // http://eslint.org/docs/rules/array-callback-return
     'array-callback-return': 'error',
-
-    // Use curly braces on block statement like if/while
-    // http://eslint.org/docs/rules/curly
-    curly: 'error',
 
     // Always add default case in switch statements
     // http://eslint.org/docs/rules/default-case
@@ -101,10 +106,6 @@ module.exports = {
     // DISABLED because throwing error in for loop
     // http://eslint.org/docs/rules/no-magic-numbers
     'no-magic-numbers': 'off',
-
-    // Remove useless space, unless for object property alignment
-    // http://eslint.org/docs/rules/no-multi-spaces
-    'no-multi-spaces': 'error',
 
     // Don't reassign function arguments directly for predictability and perf
     // http://eslint.org/docs/rules/no-param-reassign
@@ -175,10 +176,6 @@ module.exports = {
     // http://eslint.org/docs/rules/no-sync
     'no-sync': 'warn',
 
-    // Use brace inline with keyword identifier, and use multiline brace
-    // http://eslint.org/docs/rules/brace-style
-    'brace-style': ['error', '1tbs', { allowSingleLine: false }],
-
     // Use camelcase for variable names and object property
     // http://eslint.org/docs/rules/camelcase
     camelcase: ['warn', { properties: 'never' }],
@@ -187,29 +184,9 @@ module.exports = {
     // http://eslint.org/docs/rules/comma-dangle
     'comma-dangle': 'off',
 
-    // Always put space after comma
-    // http://eslint.org/docs/rules/comma-spacing
-    'comma-spacing': ['error', { before: false, after: true }],
-
-    // Put comma last after each item
-    // http://eslint.org/docs/rules/comma-style
-    'comma-style': ['error', 'last'],
-
-    // Do not add space for computed property, similar to array
-    // http://eslint.org/docs/rules/computed-property-spacing
-    'computed-property-spacing': ['error', 'never'],
-
     // Use clear this value inside function
     // http://eslint.org/docs/rules/consistent-this
     'consistent-this': 'error',
-
-    // Always use EOL in each files
-    // http://eslint.org/docs/rules/eol-last
-    'eol-last': 'error',
-
-    // No space on function call between name and parens
-    // http://eslint.org/docs/rules/func-call-spacing
-    'func-call-spacing': ['error', 'never'],
 
     // Function must be declared with name, except arrow function for better stack trace
     // http://eslint.org/docs/rules/func-names
@@ -223,21 +200,6 @@ module.exports = {
     // http://eslint.org/docs/rules/indent
     indent: 'off',
 
-    // Add space after colon in object property
-    // http://eslint.org/docs/rules/key-spacing
-    'key-spacing': [
-      'error',
-      {
-        beforeColon: false,
-        afterColon: true,
-        mode: 'minimum',
-      },
-    ],
-
-    // Add space before and after keyword
-    // http://eslint.org/docs/rules/keyword-spacing
-    'keyword-spacing': ['error', { before: true, after: true }],
-
     // Use unix linebreak
     // http://eslint.org/docs/rules/linebreak-style
     'linebreak-style': ['error', 'unix'],
@@ -245,10 +207,6 @@ module.exports = {
     // Prevent nesting hell
     // http://eslint.org/docs/rules/max-depth
     'max-depth': ['warn', MAX_DEPTH],
-
-    // Disabled, covered in prettier
-    // http://eslint.org/docs/rules/max-len
-    'max-len': 'off',
 
     // Prevent callback hell
     // http://eslint.org/docs/rules/max-nested-callbacks
@@ -258,10 +216,6 @@ module.exports = {
     // http://eslint.org/docs/rules/max-params
     'max-params': ['warn', MAX_PARAMS],
 
-    // Use parens when invoking constructor
-    // http://eslint.org/docs/rules/new-parens
-    'new-parens': 'error',
-
     // Use newline before return
     // http://eslint.org/docs/rules/newline-before-return
     'newline-before-return': 'off',
@@ -269,10 +223,6 @@ module.exports = {
     // Use array literal instead of constructor
     // http://eslint.org/docs/rules/no-array-constructor
     'no-array-constructor': 'error',
-
-    // Use at most 2 empty lines
-    // http://eslint.org/docs/rules/no-multiple-empty-lines
-    'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1, maxBOF: 1 }],
 
     // Use positive comparison if convenient
     // http://eslint.org/docs/rules/no-negated-condition
@@ -282,64 +232,13 @@ module.exports = {
     // http://eslint.org/docs/rules/no-nested-ternary
     'no-nested-ternary': 'error',
 
-    // No useless trailing spaces causing confusion on diffs
-    // http://eslint.org/docs/rules/no-trailing-spaces
-    'no-trailing-spaces': 'error',
-
     // Simplify ternary if possible
     // http://eslint.org/docs/rules/no-unneeded-ternary
     'no-unneeded-ternary': 'error',
 
-    // Do not confuse people with whitespace before property
-    // http://eslint.org/docs/rules/no-whitespace-before-property
-    'no-whitespace-before-property': 'error',
-
     // No need to enforce newline on object
     // http://eslint.org/docs/rules/object-curly-newline
     'object-curly-newline': 'off',
-
-    // No newline at the beginning of block statement
-    // http://eslint.org/docs/rules/padded-blocks
-    'padded-blocks': ['warn', 'never'],
-
-    // Use quote in object property only when needed
-    // http://eslint.org/docs/rules/quote-props
-    'quote-props': ['warn', 'as-needed'],
-
-    // Do not enforce quotes (handled by prettier)
-    // http://eslint.org/docs/rules/quotes
-    quotes: 'off',
-
-    // Do not use space before semicolon
-    // http://eslint.org/docs/rules/semi-spacing
-    'semi-spacing': ['error', { before: false, after: true }],
-
-    // Use semicolon
-    // http://eslint.org/docs/rules/semi
-    semi: ['error', 'always'],
-
-    // Always use space before block statement
-    // http://eslint.org/docs/rules/space-before-blocks
-    'space-before-blocks': ['error', 'always'],
-
-    // Use space before function parens except named function
-    // http://eslint.org/docs/rules/space-before-function-paren
-    'space-before-function-paren': [
-      'error',
-      { named: 'never', anonymous: 'always' },
-    ],
-
-    // Do not add space inside parens
-    // http://eslint.org/docs/rules/space-in-parens
-    'space-in-parens': ['error', 'never'],
-
-    // Always add space between infix operand
-    // http://eslint.org/docs/rules/space-infix-ops
-    'space-infix-ops': 'error',
-
-    // Add space after unary words, like new/delete
-    // http://eslint.org/docs/rules/space-unary-ops
-    'space-unary-ops': ['error', { words: true, nonwords: false }],
 
     // Add space after comment mark
     // http://eslint.org/docs/rules/spaced-comment
@@ -348,10 +247,6 @@ module.exports = {
     // No need to enforce styling in arrow function body
     // http://eslint.org/docs/rules/arrow-body-style
     'arrow-body-style': 'off',
-
-    // Add space before & after arrow in arrow function
-    // http://eslint.org/docs/rules/arrow-spacing
-    'arrow-spacing': ['error', { before: true, after: true }],
 
     // Make sure you know why you don't call super in constructor class that extends
     // http://eslint.org/docs/rules/constructor-super
@@ -391,16 +286,26 @@ module.exports = {
     // http://eslint.org/docs/rules/prefer-template
     'prefer-template': 'warn',
 
-    // No spacing on rest & spread
-    // http://eslint.org/docs/rules/rest-spread-spacing
-    'rest-spread-spacing': ['error', 'never'],
-
-    // No space inside template string variables
-    // http://eslint.org/docs/rules/template-curly-spacing
-    'template-curly-spacing': ['warn', 'never'],
-
     // Allow extending another class without lint error
     // http://eslint.org/docs/rules/class-methods-use-this
     'class-methods-use-this': 'off',
+
+    // Matches override rule from prettier
+    // http://eslint.org/docs/rules/object-curly-spacing
+    'babel/object-curly-spacing': 'off',
+
+    // Allow constructor without PascalCase name, e.g: new webpack.SomePlugin()
+    // http://eslint.org/docs/rules/new-cap
+    'new-cap': 'off',
+    'babel/new-cap': 'off',
+
+    // Using object shorthand is recommended
+    // http://eslint.org/docs/rules/object-shorthand
+    'object-shorthand': 'warn',
+
+    // Only use `this` inside method
+    // http://eslint.org/docs/rules/no-invalid-this
+    'no-invalid-this': 'off',
+    'babel/no-invalid-this': 'error',
   },
 };

@@ -6,10 +6,13 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "postinstall": "npm run bootstrap -- -y",
-    "test": "lerna run test",
+    "test": "lerna run test && npm run check",
     "precommit": "lint-staged",
-    "check-rules":
-      "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js"
+    "check": "npm run check:rules && npm run check:prettier",
+    "check:rules":
+      "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js",
+    "check:prettier":
+      "eslint --print-config .eslintrc | eslint-config-prettier-check"
   },
   "lint-staged": {
     "*.js": ["prettier --trailing-comma es5 --single-quote --write", "git add"]
@@ -19,6 +22,7 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.5.0",
+    "eslint-config-prettier": "^2.4.0",
     "eslint-find-rules": "^3.1.1",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-flowtype": "^2.35.0",

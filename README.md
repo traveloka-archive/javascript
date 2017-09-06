@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/traveloka/javascript.svg?branch=master)](https://travis-ci.org/traveloka/javascript)
 
-JavaScript style guide in Traveloka is enforced using tool called `marlint` which is a CLI based linter by extending [ESLint](http://eslint.org/) to support React, Flowtype, and ES2015+ natively.
+JavaScript code standard in Traveloka is enforced using tool called `marlint` which is a CLI based linter by extending [ESLint](http://eslint.org/) to support React, Flowtype, and ES2015+ natively. Because this standard doesn't enforce code style, you can use `marlint` and [`prettier`](https://github.com/prettier/prettier) directly without having to configure anything.
 
 ## Packages
 
