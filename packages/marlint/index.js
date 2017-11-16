@@ -1,7 +1,6 @@
 /* eslint prefer-arrow-callback: 0 */
 'use strict';
 const eslint = require('eslint');
-const os = require('os');
 const Worker = require('jest-worker').default;
 const globby = require('globby');
 const minimatch = require('minimatch');
@@ -56,27 +55,10 @@ function runEslint(paths, options) {
     });
   }
 
-  const maxWorker = os.cpus().length - 1;
-  const maxFilesPerWorker = Math.floor(paths.length / maxWorker);
   const worker = new Worker(require.resolve('./worker'));
 
   return Promise.all(
-    paths
-      .reduce((result, path) => {
-        const idx = result.length;
-        if (idx === 0) {
-          result[0] = [path];
-        } else if (result[idx - 1].lenght < maxFilesPerWorker) {
-          result[idx - 1].push(path);
-        } else {
-          result[idx] = [path];
-        }
-
-        return result;
-      }, [])
-      .map(partialPaths => {
-        return worker.lint(partialPaths, options.eslint);
-      })
+    paths.map(path => worker.lint(path, options.eslint))
   ).then(reports => {
     return mergeReports(reports.map(report => processReport(report, options)));
   });

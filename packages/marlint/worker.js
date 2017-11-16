@@ -1,6 +1,6 @@
 const eslint = require('eslint');
 
-exports.lint = function(paths, options) {
+exports.lint = function(path, options) {
   const engine = new eslint.CLIEngine(options);
-  return engine.executeOnFiles(paths, options);
+  return engine.executeOnFiles([path], options);
 };
