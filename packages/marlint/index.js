@@ -1,6 +1,7 @@
 /* eslint prefer-arrow-callback: 0 */
 'use strict';
 const eslint = require('eslint');
+const os = require('os');
 const Worker = require('jest-worker').default;
 const globby = require('globby');
 const minimatch = require('minimatch');
@@ -18,6 +19,8 @@ const DEFAULT_IGNORES = [
   'fixture.js',
   '{test/,}fixture{s,}/**',
 ];
+
+const MAX_WORKER = os.cpus().length;
 
 function mergeReports(reports) {
   // Merge multiple reports into a single report
@@ -38,14 +41,7 @@ function mergeReports(reports) {
   };
 }
 
-function processReport(report, options) {
-  report.results = options.eslint.quiet
-    ? eslint.CLIEngine.getErrorResults(report.results)
-    : report.results;
-  return report;
-}
-
-function runEslint(paths, options) {
+function runEslint(paths, options, worker) {
   const ignores = options.marlint.ignores;
 
   if (ignores) {
@@ -55,13 +51,21 @@ function runEslint(paths, options) {
     });
   }
 
-  const worker = new Worker(require.resolve('./worker'));
+  // we can't fill with empty array because reference
+  const jobs = Array(MAX_WORKER)
+    .fill('x')
+    .map(x => []);
 
   return Promise.all(
-    paths.map(path => worker.lint(path, options.eslint))
-  ).then(reports => {
-    return mergeReports(reports.map(report => processReport(report, options)));
-  });
+    paths
+      .reduce((jobs, path, index) => {
+        // insert job round robin
+        const idx = index % MAX_WORKER;
+        jobs[idx].push(path);
+        return jobs;
+      }, jobs)
+      .map(paths => worker.lint(paths, options.eslint))
+  ).then(mergeReports);
 }
 
 exports.lintText = function lintText(str, opts) {
@@ -82,17 +86,24 @@ exports.lintFiles = function lintFiles(patterns, opts) {
     glob = '**/*.js';
   }
 
+  const worker = new Worker(require.resolve('./worker'), {
+    exposedMethods: ['lint'],
+    numWorkers: MAX_WORKER,
+  });
+
   return globby(glob, { ignore }).then(paths => {
     if (paths.find(path => path.includes('packages/'))) {
       // lerna monorepo with possible options difference for each package
       const multiPaths = getMultiPaths(paths, opts);
       return Promise.all(
-        multiPaths.map(pkg => runEslint(pkg.paths, pkg.options))
+        multiPaths.map(pkg => {
+          return runEslint(pkg.paths, pkg.options, worker);
+        })
       ).then(mergeReports);
     }
 
     const options = getOptionsForPath(paths[0], opts);
-    return runEslint(paths, options);
+    return runEslint(paths, options, worker);
   });
 };
 

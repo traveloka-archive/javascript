@@ -37,23 +37,29 @@ updateNotifier({ pkg: cli.pkg }).notify();
 const input = cli.input;
 const opts = cli.flags;
 
-marlint.lintFiles(input, opts).then(report => {
-  if (opts.fix) {
-    marlint.outputFixes(report);
-  }
-
-  const output = pretty(report.results);
-
-  if (opts.json) {
-    const eslintJson = require.resolve('eslint-json');
-    const result = marlint.getFormatter(eslintJson)(report.results);
-
-    if (opts.jsonOutputFile) {
-      fs.writeFileSync(opts.jsonOutputFile, result);
-      process.stdout.write(`Test results written to: ${opts.jsonOutputFile}`);
+marlint
+  .lintFiles(input, opts)
+  .then(report => {
+    if (opts.fix) {
+      marlint.outputFixes(report);
     }
-  }
 
-  process.stdout.write(output);
-  process.exit(report.errorCount === 0 ? 0 : 1);
-});
+    const output = pretty(report.results);
+
+    if (opts.json) {
+      const eslintJson = require.resolve('eslint-json');
+      const result = marlint.getFormatter(eslintJson)(report.results);
+
+      if (opts.jsonOutputFile) {
+        fs.writeFileSync(opts.jsonOutputFile, result);
+        process.stdout.write(`Test results written to: ${opts.jsonOutputFile}`);
+      }
+    }
+
+    process.stdout.write(output);
+    process.exit(report.errorCount === 0 ? 0 : 1);
+  })
+  .catch(err => {
+    console.error(err.stack);
+    process.exit(1);
+  });
