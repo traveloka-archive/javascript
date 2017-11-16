@@ -1,6 +1,8 @@
 /* eslint prefer-arrow-callback: 0 */
 'use strict';
 const eslint = require('eslint');
+const os = require('os');
+const Worker = require('jest-worker').default;
 const globby = require('globby');
 const minimatch = require('minimatch');
 const pkgConf = require('pkg-conf');
@@ -54,10 +56,30 @@ function runEslint(paths, options) {
     });
   }
 
-  const engine = new eslint.CLIEngine(options.eslint);
-  const report = engine.executeOnFiles(paths, options.eslint);
+  const maxWorker = os.cpus().length - 1;
+  const maxFilesPerWorker = Math.floor(paths.length / maxWorker);
+  const worker = new Worker(require.resolve('./worker'));
 
-  return processReport(report, options);
+  return Promise.all(
+    paths
+      .reduce((result, path) => {
+        const idx = result.length;
+        if (idx === 0) {
+          result[0] = [path];
+        } else if (result[idx - 1].lenght < maxFilesPerWorker) {
+          result[idx - 1].push(path);
+        } else {
+          result[idx] = [path];
+        }
+
+        return result;
+      }, [])
+      .map(partialPaths => {
+        return worker.lint(partialPaths, options.eslint);
+      })
+  ).then(reports => {
+    return mergeReports(reports.map(report => processReport(report, options)));
+  });
 }
 
 exports.lintText = function lintText(str, opts) {
@@ -82,9 +104,9 @@ exports.lintFiles = function lintFiles(patterns, opts) {
     if (paths.find(path => path.includes('packages/'))) {
       // lerna monorepo with possible options difference for each package
       const multiPaths = getMultiPaths(paths, opts);
-      return mergeReports(
+      return Promise.all(
         multiPaths.map(pkg => runEslint(pkg.paths, pkg.options))
-      );
+      ).then(mergeReports);
     }
 
     const options = getOptionsForPath(paths[0], opts);

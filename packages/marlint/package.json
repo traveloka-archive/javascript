@@ -53,6 +53,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.3.0",
     "globby": "^6.0.0",
+    "jest-worker": "^21.2.1",
     "lodash.merge": "^4.6.0",
     "meow": "^3.7.0",
     "minimatch": "^3.0.4",
