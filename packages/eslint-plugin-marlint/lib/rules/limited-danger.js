@@ -36,9 +36,9 @@ module.exports = {
     }
 
     /**
-     * Checks if a node name is allowed to have .
+     * Checks if a node name is allowed to have dangerous attribute.
      * @param {String} tagName - JSX tag name
-     * @returns {boolean} Whether or not the node name match the JSX tag convention.
+     * @returns {boolean} Whether or not tag name is allowed to have dangerous attribute
      */
     function isAllowedTagName(name) {
       return name === "script";

@@ -42,4 +42,4 @@ Then configure the rules you want to use under the rules section.
 
 ## Supported Rules
 
-* [limited-danger](docs/rules/limited-danger)
+* [limited-danger](docs/rules/limited-danger.md)
