@@ -1,0 +1,39 @@
+{
+  "name": "eslint-plugin-marlint",
+  "version": "0.0.0",
+  "description": "Traveloka custom eslint plugin",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "marlint",
+    "traveloka"
+  ],
+  "author": "Fatih Kalifa <fatihkalifa@gmail.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha tests --recursive",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "requireindex": "~1.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.2",
+    "eslint": "~3.9.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^5.0.0",
+    "mocha": "^4.0.1",
+    "prettier": "^1.8.2"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "lint-staged": {
+    "**/*.{js,md}": [
+      "prettier --write",
+      "git add -A"
+    ]
+  },
+  "license": "MIT"
+}

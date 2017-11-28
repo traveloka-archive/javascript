@@ -1,7 +1,7 @@
 const INDENT_TYPE = 2;
 
 module.exports = {
-  plugins: ['react'],
+  plugins: ['react', 'marlint'],
   // View link below for react rules documentation
   // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
   rules: {
@@ -25,9 +25,10 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md
     'react/no-children-prop': 'error',
 
-    // Never use dangerouslySetInnerHtml
-    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger.md
-    'react/no-danger': 'error',
+    // Never use dangerouslySetInnerHtml unlesss inside script tag
+    // https://github.com/traveloka/javascript/packages/eslint-plugin-marlint/blob/master/docs/rules/limited-danger.md
+    'react/no-danger': 'off',
+    'marlint/limited-danger': 'error',
 
     // Never use dangerouslySetInnerHtml with children together
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md
