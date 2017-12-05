@@ -7,7 +7,7 @@ Apollo state, this is why we only limit its usage to script tag.
 ## Rule Details
 
 This rule prevent usage of `dangerouslySetInnerHTML` in node other than `script`
-tag.
+and `style` tag.
 
 Examples of **incorrect** code for this rule:
 
@@ -21,9 +21,22 @@ Examples of **correct** code for this rule:
 <script dangerouslySetInnerHTML={{ __html: "" }} />;
 ```
 
+## Rule Options
+
+```js
+...
+"marlint/limited-danger": [<enabled>, { "allowedTagNames": [<string>] }]
+...
+```
+
+### `allowedTagNames`
+
+An array of strings, with the name of tag names that are allowed to have
+dangerous attribute. The default value of this option is `['script', 'style']`.
+
 ## When Not To Use It
 
-When you want to use dangerouslySetInnerHTML everywhere
+When you want to use `dangerouslySetInnerHTML` everywhere
 
 ## Further Reading
 

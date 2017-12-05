@@ -4,6 +4,12 @@
  */
 "use strict";
 
+// ------------------------------------------------------------------------------
+// Constants
+// ------------------------------------------------------------------------------
+
+const DEFAULTS = ["script", "style"];
+
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
@@ -15,7 +21,20 @@ module.exports = {
       category: "Best Practices",
       recommended: true
     },
-    schema: []
+    schema: [
+      {
+        type: "object",
+        properties: {
+          allowedTagNames: {
+            type: "array",
+            items: {
+              type: "string"
+            }
+          }
+        },
+        additionalProperties: true
+      }
+    ]
   },
 
   create: function(context) {
@@ -41,13 +60,15 @@ module.exports = {
      * @returns {boolean} Whether or not tag name is allowed to have dangerous attribute
      */
     function isAllowedTagName(name) {
-      return name === "script";
+      const config = context.options[0] || {};
+      const allowedTagNames = config.allowedTagNames || DEFAULTS;
+      return allowedTagNames.indexOf(name) !== -1;
     }
 
     /**
      * Checks if a JSX attribute is dangerous.
      * @param {String} name - Name of the attribute to check.
-     * @returns {boolean} Whether or not the attribute is dnagerous.
+     * @returns {boolean} Whether or not the attribute is dangerous.
      */
     function isDangerous(name) {
       return name === "dangerouslySetInnerHTML";

@@ -28,7 +28,8 @@ var ruleTester = new RuleTester({ parserOptions });
 ruleTester.run("limited-danger", rule, {
   valid: [
     { code: '<div>{"html"}</div>' },
-    { code: '<script dangerouslySetInnerHTML={{ __html: "html" }} />' }
+    { code: '<style dangerouslySetInnerHTML={{ __html: "css" }} />' },
+    { code: '<script dangerouslySetInnerHTML={{ __html: "js" }} />' }
   ],
 
   invalid: [
