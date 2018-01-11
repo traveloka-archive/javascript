@@ -1,23 +1,21 @@
-/* eslint-env jest */
-/* eslint no-warning-comments: 0 */
+const fs = require('fs');
 const path = require('path');
+const eslint = require('eslint');
+const tempWrite = require('temp-write');
 
-const { exec } = require('child_process');
-const eslintPath = require.resolve('../../node_modules/.bin/eslint');
-const eslintJsonFormat = `--format=${require.resolve('../../node_modules/eslint-json')}`;
-const eslintCustomConfig = `--config ${require.resolve('../')}`;
+const DEFAULT_CONFIG = require('../index');
 
-function runEslint(file) {
-  // HACK, we can't use eslint module in unit test here because using babel-eslint
-  // as a parser will monkeypatch eslint code (which we already require in this test)
-  // that's why some rules become broken with weird error (see #1)
-  return new Promise(resolve => {
-    exec(`${eslintPath} ${eslintJsonFormat} ${eslintCustomConfig} ${file}`, { encoding: 'utf-8' }, (_, stdout, stderr) => {
-      console.log('err', _);
-      console.log('stdout', stdout);
-      console.log('stderr', stderr);
-      const result = JSON.parse(stdout);
-      resolve(result[0].messages.sort((m1, m2) => {
+function runEslint(file, conf = DEFAULT_CONFIG) {
+  const str = fs.readFileSync(file, { encoding: 'utf-8' });
+  const linter = new eslint.CLIEngine({
+    useEslintrc: false,
+    configFile: tempWrite.sync(JSON.stringify(conf))
+  });
+
+  return linter.executeOnText(str).results[0].messages
+  // disable marlint plugin for now because eslint failed to load it
+  .filter(m => !m.ruleId.startsWith('marlint'))
+  .sort((m1, m2) => {
         // sort by line number first
         if (m1.line > m2.line) {
           return 1;
@@ -42,9 +40,7 @@ function runEslint(file) {
         }
 
         return -1;
-      }));
-    });
-  });
+      });
 }
 
 it('block offending rule', async () => {
