@@ -134,11 +134,5 @@ Array [
     "ruleId": "no-console",
     "severity": 1,
   },
-  Object {
-    "column": 13,
-    "line": 93,
-    "ruleId": "prefer-template",
-    "severity": 1,
-  },
 ]
 `;
