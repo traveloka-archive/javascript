@@ -13,6 +13,9 @@ function runEslint(file) {
   // that's why some rules become broken with weird error (see #1)
   return new Promise(resolve => {
     exec(`${eslintPath} ${eslintJsonFormat} ${eslintCustomConfig} ${file}`, { encoding: 'utf-8' }, (_, stdout, stderr) => {
+      console.log('err', _);
+      console.log('stdout', stdout);
+      console.log('stderr', stderr);
       const result = JSON.parse(stdout);
       resolve(result[0].messages.sort((m1, m2) => {
         // sort by line number first
