@@ -14,6 +14,10 @@ JavaScript code standard in Traveloka is enforced using tool called `marlint` wh
 
   Base config for all eslint rules.
 
+- **[eslint-plugin-marlint](packages/eslint-plugin-marlint)**
+
+  Additional custom rules for marlint
+
 ## Getting started
 
 To setup this repo locally, run following commands
