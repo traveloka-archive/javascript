@@ -282,9 +282,9 @@ module.exports = {
     // http://eslint.org/docs/rules/prefer-spread
     'prefer-spread': 'error',
 
-    // Use template string if convenient
+    // Sometimes string concat is more readable
     // http://eslint.org/docs/rules/prefer-template
-    'prefer-template': 'warn',
+    'prefer-template': 'off',
 
     // Allow extending another class without lint error
     // http://eslint.org/docs/rules/class-methods-use-this
