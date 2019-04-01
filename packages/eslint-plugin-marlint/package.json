@@ -27,7 +27,7 @@
     "prettier": "^1.8.2"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8.4"
   },
   "lint-staged": {
     "**/*.{js,md}": [
