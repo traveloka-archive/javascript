@@ -1,6 +1,9 @@
 /* @flow */
 import { render } from 'react-dom';
 
+// no named imports from lodash
+import { chunk } from 'lodash';
+
 // Flow type declaration should be allowed
 type ReactElement = { type: string, props: Object };
 type PropTypesViaFlowTypes = {

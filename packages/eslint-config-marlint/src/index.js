@@ -3,6 +3,7 @@ const marlintRules = [
   './rules/flowtype',
   './rules/react',
   './rules/jsx-a11y',
+  './rules/lodash',
 ].map(require.resolve);
 
 module.exports = {
