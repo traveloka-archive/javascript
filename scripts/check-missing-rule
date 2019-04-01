@@ -29,47 +29,6 @@ const EXPERIMENTAL_RULES = [
   'jsx-a11y/no-noninteractive-tabindex',
   'jsx-a11y/no-redundant-roles',
   'react/no-unused-state',
-  'lodash/callback-binding', 
-  'lodash/chain-style', 
-  'lodash/chaining', 
-  'lodash/collection-method-value', 
-  'lodash/collection-ordering', 
-  'lodash/collection-return', 
-  'lodash/consistent-compose', 
-  'lodash/identity-shorthand', 
-  'lodash/matches-prop-shorthand', 
-  'lodash/matches-shorthand', 
-  'lodash/no-commit', 
-  'lodash/no-double-unwrap', 
-  'lodash/no-extra-args', 
-  'lodash/no-unbound-this', 
-  'lodash/path-style', 
-  'lodash/prefer-compact', 
-  'lodash/prefer-constant', 
-  'lodash/prefer-filter', 
-  'lodash/prefer-find', 
-  'lodash/prefer-flat-map', 
-  'lodash/prefer-get', 
-  'lodash/prefer-immutable-method', 
-  'lodash/prefer-includes', 
-  'lodash/prefer-invoke-map', 
-  'lodash/prefer-is-nil', 
-  'lodash/prefer-lodash-chain', 
-  'lodash/prefer-lodash-method', 
-  'lodash/prefer-lodash-typecheck', 
-  'lodash/prefer-map', 
-  'lodash/prefer-matches', 
-  'lodash/prefer-noop', 
-  'lodash/prefer-over-quantifier', 
-  'lodash/prefer-reject', 
-  'lodash/prefer-some', 
-  'lodash/prefer-startswith', 
-  'lodash/prefer-thru', 
-  'lodash/prefer-times', 
-  'lodash/prefer-wrapper-method', 
-  'lodash/preferred-alias', 
-  'lodash/prop-shorthand', 
-  'lodash/unwrap',
 ];
 
 // Prints rules recognized by ESLint that don't appear in the given config
@@ -80,7 +39,8 @@ const ruleFinder = getRuleFinder(specifiedFile);
 
 const missingRules = ruleFinder.getUnusedRules()
 .filter(rule => DEPRECATED_RULES.indexOf(rule) === -1)
-.filter(rule => EXPERIMENTAL_RULES.indexOf(rule) === -1);
+.filter(rule => EXPERIMENTAL_RULES.indexOf(rule) === -1)
+.filter(rule => !rule.startsWith('lodash/'));
 
 if (missingRules.length) {
   console.log(`New rules to add to the config: ${missingRules.join(', ')}.`);
