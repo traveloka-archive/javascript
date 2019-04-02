@@ -3,9 +3,9 @@
   "license": "MIT",
   "scripts": {
     "publish": "lerna publish",
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --npmClient=yarn",
     "clean": "lerna clean",
-    "postinstall": "npm run bootstrap -- -y",
+    "postinstall": "yarn bootstrap",
     "test": "lerna run test && npm run check",
     "precommit": "lint-staged",
     "check": "npm run check:rules && npm run check:prettier",
@@ -33,7 +33,7 @@
     "eslint-plugin-react": "^7.2.1",
     "eslint-plugin-react-hooks": "^1.6.0",
     "husky": "^0.14.3",
-    "lerna": "^2.0.0-beta.34",
+    "lerna": "^3.13.1",
     "lint-staged": "^4.0.4",
     "prettier": "^1.6.0"
   }

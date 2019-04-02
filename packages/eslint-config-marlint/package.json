@@ -2,7 +2,7 @@
   "name": "eslint-config-marlint",
   "version": "6.3.4",
   "description": "ESLint shareable config for Marlint",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
@@ -12,6 +12,7 @@
   },
   "files": [
     "src/index.js",
+    "src/typescript.js",
     "src/rules/base.js",
     "src/rules/esnext.js",
     "src/rules/flowtype.js",
