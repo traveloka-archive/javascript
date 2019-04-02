@@ -9,7 +9,7 @@
     "test": "lerna run test && npm run check",
     "precommit": "lint-staged",
     "check": "npm run check:rules && npm run check:prettier",
-    "check:rules": "./scripts/check-missing-rule packages/eslint-config-marlint/src/index.js",
+    "check:rules": "./scripts/check-missing-rule packages/eslint-config-marlint/index.js",
     "check:prettier": "eslint --print-config .eslintrc | eslint-config-prettier-check"
   },
   "lint-staged": {

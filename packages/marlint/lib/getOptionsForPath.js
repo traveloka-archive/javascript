@@ -4,7 +4,6 @@ const path = require('path');
 
 function buildOptions(packageOptions, runtimeOptions) {
   const isTypescript = Boolean(packageOptions.typescript);
-  const parser = isTypescript ? '@typescript-eslint/parser' : 'babel-eslint';
 
   return {
     marlint: {
@@ -15,7 +14,6 @@ function buildOptions(packageOptions, runtimeOptions) {
       baseConfig: {
         extends: isTypescript ? 'marlint/typescript' : 'marlint',
       },
-      parser,
       rules: packageOptions.rules || {},
       globals: packageOptions.globals || [],
       quiet: Boolean(runtimeOptions.quiet),
