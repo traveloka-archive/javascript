@@ -2,6 +2,11 @@ const INDENT_TYPE = 2;
 
 module.exports = {
   plugins: ['react', 'marlint', 'react-hooks'],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   // View link below for react rules documentation
   // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
   rules: {
