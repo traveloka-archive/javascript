@@ -2,6 +2,11 @@ const INDENT_TYPE = 2;
 
 module.exports = {
   plugins: ['react', 'marlint', 'react-hooks'],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   // View link below for react rules documentation
   // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
   rules: {
@@ -139,7 +144,7 @@ module.exports = {
 
     // Only include JSX inside .js or .jsx file
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
 
     // Disabled, covered in prettier
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-first-prop-new-line.md

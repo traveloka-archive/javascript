@@ -2,7 +2,7 @@
   "name": "eslint-config-marlint",
   "version": "6.3.4",
   "description": "ESLint shareable config for Marlint",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
@@ -11,12 +11,9 @@
     "testURL": "http://localhost"
   },
   "files": [
-    "src/index.js",
-    "src/rules/base.js",
-    "src/rules/esnext.js",
-    "src/rules/flowtype.js",
-    "src/rules/jsx-a11y.js",
-    "src/rules/react.js"
+    "index.js",
+    "typescript.js",
+    "src/"
   ],
   "repository": {
     "type": "git",
@@ -51,17 +48,21 @@
   },
   "homepage": "https://github.com/traveloka/javascript/packages/eslint-config-marlint#readme",
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint": "^4.15.0",
-    "eslint-config-prettier": "^2.4.0",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^2.10.0",
     "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-lodash": "^5.1.0",
     "eslint-plugin-marlint": "^0.1.2",
-    "eslint-plugin-react": "^7.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "jest": "^22.0.5",
-    "temp-write": "^3.4.0"
+    "jest": "^22.4.4",
+    "react": "^16.8.6",
+    "temp-write": "^3.4.0",
+    "typescript": "^3.3.4000"
   }
 }

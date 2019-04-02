@@ -16,15 +16,15 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "requireindex": "~1.1.0"
+    "requireindex": "^1.1.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.2",
-    "eslint": "~3.9.1",
+    "babel-eslint": "^8.2.6",
+    "eslint": "^3.9.1",
     "husky": "^0.14.3",
     "lint-staged": "^5.0.0",
-    "mocha": "^4.0.1",
-    "prettier": "^1.8.2"
+    "mocha": "^4.1.0",
+    "prettier": "^1.16.4"
   },
   "engines": {
     "node": ">=6"

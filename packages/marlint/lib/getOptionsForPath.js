@@ -3,6 +3,8 @@ const merge = require('lodash.merge');
 const path = require('path');
 
 function buildOptions(packageOptions, runtimeOptions) {
+  const isTypescript = Boolean(packageOptions.typescript);
+
   return {
     marlint: {
       ignores: packageOptions.ignores || [],
@@ -10,7 +12,7 @@ function buildOptions(packageOptions, runtimeOptions) {
     eslint: {
       useEslintrc: false,
       baseConfig: {
-        extends: 'marlint',
+        extends: isTypescript ? 'marlint/typescript' : 'marlint',
       },
       rules: packageOptions.rules || {},
       globals: packageOptions.globals || [],

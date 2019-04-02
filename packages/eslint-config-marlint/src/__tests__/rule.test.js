@@ -3,7 +3,7 @@ const path = require('path');
 const eslint = require('eslint');
 const tempWrite = require('temp-write');
 
-const DEFAULT_CONFIG = require('../index');
+const DEFAULT_CONFIG = require('../../index');
 
 function runEslint(file, conf = DEFAULT_CONFIG) {
   const str = fs.readFileSync(file, { encoding: 'utf-8' });
@@ -13,34 +13,34 @@ function runEslint(file, conf = DEFAULT_CONFIG) {
   });
 
   return linter.executeOnText(str).results[0].messages
-  // disable marlint plugin for now because eslint failed to load it
-  .filter(m => !m.ruleId.startsWith('marlint'))
-  .sort((m1, m2) => {
-        // sort by line number first
-        if (m1.line > m2.line) {
-          return 1;
-        }
+    // disable marlint plugin for now because eslint failed to load it
+    .filter(m => !m.ruleId.startsWith('marlint'))
+    .sort((m1, m2) => {
+      // sort by line number first
+      if (m1.line > m2.line) {
+        return 1;
+      }
 
-        if (m1.line < m2.line) {
-          return -1;
-        }
-
-        // same line number, sort by column
-        if (m1.column > m2.column) {
-          return 1;
-        }
-
-        if (m1.column < m2.column) {
-          return -1;
-        }
-
-        // same line number, same column, sort by rule id
-        if (m1.ruleId > m2.ruleId) {
-          return 1;
-        }
-
+      if (m1.line < m2.line) {
         return -1;
-      });
+      }
+
+      // same line number, sort by column
+      if (m1.column > m2.column) {
+        return 1;
+      }
+
+      if (m1.column < m2.column) {
+        return -1;
+      }
+
+      // same line number, same column, sort by rule id
+      if (m1.ruleId > m2.ruleId) {
+        return 1;
+      }
+
+      return -1;
+    });
 }
 
 it('block offending rule', async () => {
