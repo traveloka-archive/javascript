@@ -12,6 +12,7 @@ function buildOptions(packageOptions, runtimeOptions) {
       baseConfig: {
         extends: 'marlint',
       },
+      parser: packageOptions.parser || 'babel-eslint',
       rules: packageOptions.rules || {},
       globals: packageOptions.globals || [],
       quiet: Boolean(runtimeOptions.quiet),
