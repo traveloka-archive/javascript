@@ -4,7 +4,6 @@ const eslint = require('eslint');
 const tempWrite = require('temp-write');
 
 const DEFAULT_CONFIG = require('../../index');
-const TYPESCRIPT_CONFIG = require('../../typescript');
 
 function runEslint(file, conf = DEFAULT_CONFIG) {
   const str = fs.readFileSync(file, { encoding: 'utf-8' });
@@ -15,7 +14,7 @@ function runEslint(file, conf = DEFAULT_CONFIG) {
 
   return linter.executeOnText(str).results[0].messages
     // disable marlint plugin for now because eslint failed to load it
-    .filter(m => m.ruleId && !m.ruleId.startsWith('marlint'))
+    .filter(m => !m.ruleId.startsWith('marlint'))
     .sort((m1, m2) => {
       // sort by line number first
       if (m1.line > m2.line) {
@@ -61,13 +60,6 @@ it('block offending rule', async () => {
 it('pass on correct code', async () => {
   const file = path.join(__dirname, './fixture-pass.js');
   const errors = await runEslint(file);
-
-  expect(errors.length).toEqual(0);
-});
-
-it('pass on correct typescript code', async () => {
-  const file = path.join(__dirname, './fixture-pass.tsx');
-  const errors = await runEslint(file, TYPESCRIPT_CONFIG);
 
   expect(errors.length).toEqual(0);
 });
