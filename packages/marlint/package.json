@@ -61,7 +61,7 @@
     "meow": "^3.7.0",
     "minimatch": "^3.0.4",
     "pkg-conf": "^2.1.0",
-    "typescript": "^3.4.1",
+    "typescript": "^3.3.4000",
     "update-notifier": "^2.5.0"
   },
   "marlint": {

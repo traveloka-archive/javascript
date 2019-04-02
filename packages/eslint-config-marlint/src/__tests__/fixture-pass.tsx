@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function TestComponent(props: Props) {
-  const [state, setState] = React.useState<string>(props.text);
+  const [state, setState] = React.useState(props.text);
   return (
     <div>
       <span>{state}</span>
