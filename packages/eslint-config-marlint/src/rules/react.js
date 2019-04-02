@@ -1,7 +1,7 @@
 const INDENT_TYPE = 2;
 
 module.exports = {
-  plugins: ['react', 'marlint'],
+  plugins: ['react', 'marlint', 'react-hooks'],
   // View link below for react rules documentation
   // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
   rules: {
@@ -242,5 +242,9 @@ module.exports = {
     // No setState on componentWillUpdate
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-will-update-set-state.md
     'react/no-will-update-set-state': 'error',
+
+    // hooks
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
 };

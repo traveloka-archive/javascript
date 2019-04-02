@@ -1,4 +1,5 @@
 /* @flow */
+import { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 
 // no named imports from lodash
@@ -94,3 +95,13 @@ x.run(
 // prefer-template
 // semi
 console.log("testing" + x.text + 'asd')
+
+function Bar(props) {
+  if (props.baz) {
+    // no conditional hooks (react-hooks/rules-of-hooks)
+    useState(false);
+  }
+
+  // warn missing deps (react-hooks/exhaustive-deps)
+  useEffect(() => void props.foo, []);
+}
