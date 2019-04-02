@@ -11,13 +11,9 @@
     "testURL": "http://localhost"
   },
   "files": [
-    "src/index.js",
-    "src/typescript.js",
-    "src/rules/base.js",
-    "src/rules/esnext.js",
-    "src/rules/flowtype.js",
-    "src/rules/jsx-a11y.js",
-    "src/rules/react.js"
+    "index.js",
+    "typescript.js",
+    "src/"
   ],
   "repository": {
     "type": "git",
