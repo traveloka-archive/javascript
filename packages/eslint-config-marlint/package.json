@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-marlint",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "description": "ESLint shareable config for Marlint",
   "main": "index.js",
   "scripts": {
