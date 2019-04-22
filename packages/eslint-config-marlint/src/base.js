@@ -6,5 +6,5 @@ const marlintRules = [
 ].map(require.resolve);
 
 module.exports = {
-  extends: [...marlintRules, 'prettier', 'prettier/flowtype', 'prettier/react'],
+  extends: [...marlintRules, 'prettier', 'prettier/react'],
 };

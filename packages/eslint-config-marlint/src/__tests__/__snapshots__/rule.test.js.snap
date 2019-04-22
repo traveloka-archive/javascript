@@ -129,6 +129,12 @@ Array [
     "severity": 1,
   },
   Object {
+    "column": 5,
+    "line": 84,
+    "ruleId": "curly",
+    "severity": 2,
+  },
+  Object {
     "column": 10,
     "line": 88,
     "ruleId": "flowtype/require-parameter-type",
