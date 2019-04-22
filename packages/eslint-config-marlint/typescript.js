@@ -4,6 +4,5 @@ module.exports = {
   extends: [
     ...base.extends,
     require.resolve('./src/rules/typescript'),
-    require.resolve('./src/rules/prettier-override'),
   ],
 };
