@@ -31,7 +31,6 @@ exports.getPaths = function getWorkspacePaths(opts) {
     lerna.packages = lerna.packages || ['packages/*'];
     return getPackageEntries(lerna.packages, opts.cwd);
   } catch (err) {
-    console.warn('Error', err.stack);
     return [];
   }
 }
