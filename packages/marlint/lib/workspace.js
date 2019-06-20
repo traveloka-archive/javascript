@@ -65,11 +65,8 @@ function groupPathsByPackage(paths, workspacePaths, defaultOpts) {
 
   paths.forEach(filePath => {
     const index = workspacePaths.findIndex(workspacePath => filePath.includes(workspacePath));
-    if (index === -1) {
-      packages[fallbackIndex].paths.push(filePath);
-    } else {
-      packages[index].paths.push(filePath);
-    }
+    const targetIndex = index === -1 ? fallbackIndex : index;
+    packages[targetIndex].paths.push(filePath);
   });
 
   return packages;
