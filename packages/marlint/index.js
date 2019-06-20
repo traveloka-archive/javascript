@@ -1,13 +1,12 @@
 /* eslint prefer-arrow-callback: 0 */
 'use strict';
-const eslint = require('eslint');
-const os = require('os');
-const Worker = require('jest-worker').default;
+const path = require('path');
 const globby = require('globby');
-const minimatch = require('minimatch');
 const pkgConf = require('pkg-conf');
-const getOptionsForPath = require('./lib/getOptionsForPath');
-const getMultiPaths = require('./lib/getMultiPaths');
+const CLIEngine = require('eslint').CLIEngine;
+
+const eslint = require('./lib/eslint');
+const workspace = require('./lib/workspace');
 
 const DEFAULT_IGNORES = [
   '**/node_modules/**',
@@ -20,93 +19,93 @@ const DEFAULT_IGNORES = [
   '{test/,}fixture{s,}/**',
 ];
 
-const MAX_WORKER = os.cpus().length;
+exports.lintText = function lintText(str, runtimeOpts) {
+  const cwd = path.resolve(runtimeOpts.cwd || process.cwd())
 
-function mergeReports(reports) {
-  // Merge multiple reports into a single report
-  let results = [];
-  let errorCount = 0;
-  let warningCount = 0;
+  const filePath = runtimeOpts.filename;
+  const absolutePath = path.resolve(cwd, filePath);
 
-  for (const report of reports) {
-    results = results.concat(report.results);
-    errorCount += report.errorCount;
-    warningCount += report.warningCount;
+  const pkgOpts = pkgConf.sync('marlint', { cwd });
+  const isTypescript = filePath.endsWith('.ts') || filePath.endsWith('.tsx');
+  const defaultOpts = eslint.generateOpts({ ...pkgOpts, typescript: isTypescript }, runtimeOpts);
+
+  const workspacePaths = workspace.getPaths({ cwd });
+
+  if (workspacePaths.length > 0) {
+    const workspacePath = workspacePaths.find(workspacePath => absolutePath.includes(workspacePath));
+
+    if (!workspacePath) {
+      const engine = new CLIEngine(defaultOpts.eslint);
+      return engine.executeOnText(str, filePath);
+    }
+
+    const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath })
+    const mergedOpts = {
+      eslint: {
+        ...defaultOpts.eslint,
+        rules: { ...defaultOpts.eslint.rules, ...workspace.rules },
+        globals: defaultOpts.eslint.globals.concat(workspaceOpts.globals),
+      }
+    };
+    const engine = new CLIEngine(mergedOpts.eslint);
+    return engine.executeOnText(str, filePath);
   }
 
-  return {
-    errorCount,
-    warningCount,
-    results,
-  };
-}
-
-function runEslint(paths, options, worker) {
-  const ignores = options.marlint.ignores;
-
-  if (ignores) {
-    // eslint-disable-next-line no-param-reassign
-    paths = paths.filter(path => {
-      return !ignores.some(pattern => minimatch(path, pattern));
-    });
-  }
-
-  // we can't fill with empty array because reference
-  const jobs = Array(MAX_WORKER)
-    .fill('x')
-    .map(x => []);
-
-  return Promise.all(
-    paths
-      .reduce((jobs, path, index) => {
-        // insert job round robin
-        const idx = index % MAX_WORKER;
-        jobs[idx].push(path);
-        return jobs;
-      }, jobs)
-      .map(paths => worker.lint(paths, options.eslint))
-  ).then(mergeReports);
-}
-
-exports.lintText = function lintText(str, opts) {
-  const path = opts.filename;
-  const runtimeOptions = { quiet: opts.quiet, fix: opts.fix };
-  const options = getOptionsForPath(path, runtimeOptions);
-
-  const engine = new eslint.CLIEngine(options.eslint);
-  return engine.executeOnText(str, path);
+  const engine = new CLIEngine(defaultOpts.eslint);
+  return engine.executeOnText(str, filePath);
 };
 
-exports.lintFiles = function lintFiles(patterns, opts) {
-  const pkgOpts = pkgConf.sync('marlint', opts.cwd);
+exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
+  const pkgOpts = pkgConf.sync('marlint', { cwd: process.cwd() });
+  const workspacePaths = workspace.getPaths({ cwd: process.cwd() });
   const ignore = DEFAULT_IGNORES.concat(pkgOpts.ignores || []);
 
   let glob = patterns;
   if (patterns.length === 0) {
-    glob = '**/*.js';
+    glob = '**/*.{js,jsx,ts,tsx}';
   }
 
-  const worker = new Worker(require.resolve('./worker'), {
-    exposedMethods: ['lint'],
-    numWorkers: MAX_WORKER,
-  });
-
   return globby(glob, { ignore }).then(paths => {
-    if (paths.some(path => path.includes('packages/'))) {
-      // lerna monorepo with possible options difference for each package
-      const multiPaths = getMultiPaths(paths, opts);
-      return Promise.all(
-        multiPaths.map(pkg => {
-          return runEslint(pkg.paths, pkg.options, worker);
-        })
-      ).then(mergeReports);
+    // separate between js and ts files because they use different parser
+    // and default rules
+    const pathsByExt = {
+      ts: [],
+      js: [],
+    };
+
+    paths.forEach(path => {
+      const isTypescript = path.endsWith('.ts') || path.endsWith('.tsx');
+      if (isTypescript) {
+        pathsByExt.ts.push(path);
+      } else {
+        pathsByExt.js.push(path);
+      }
+    });
+
+    const jsOptions = eslint.generateOpts(pkgOpts, runtimeOpts);
+    const tsOptions = eslint.generateOpts({ ...pkgOpts, typescript: true }, runtimeOpts);
+
+    // if it's a workspace, allow override root config via workspace package.json
+    if (workspacePaths.length !== 0) {
+      return Promise.all([
+        workspace.runESLint(pathsByExt.js, workspacePaths, jsOptions),
+        workspace.runESLint(pathsByExt.ts, workspacePaths, tsOptions),
+      ]).then(eslint.mergeReports);
     }
 
-    const options = getOptionsForPath(paths[0], opts);
-    return runEslint(paths, options, worker);
+    // if ts file exists, run them in parallel with JS
+    if (pathsByExt.ts.length > 0) {
+      return Promise.all([
+        eslint.run(pathsByExt.ts, tsOptions),
+        eslint.run(pathsByExt.js, jsOptions),
+      ]).then(eslint.mergeReports);
+    }
+
+    // no ts file, pass original paths
+    return eslint.run(paths, jsOptions);
   });
 };
 
-exports.getFormatter = eslint.CLIEngine.getFormatter;
-exports.getErrorResults = eslint.CLIEngine.getErrorResults;
-exports.outputFixes = eslint.CLIEngine.outputFixes;
+exports.getFormatter = CLIEngine.getFormatter;
+exports.getErrorResults = CLIEngine.getErrorResults;
+exports.outputFixes = CLIEngine.outputFixes;

@@ -7,7 +7,7 @@ function processReport(report, options) {
   return report;
 }
 
-exports.lint = function(paths, options) {
+exports.lint = function runESLint(paths, options) {
   const engine = new eslint.CLIEngine(options);
   return processReport(engine.executeOnFiles(paths, options), options);
 };

@@ -35,5 +35,10 @@
       "git add -A"
     ]
   },
+  "marlint": {
+    "rules": {
+      "func-names": 0
+    }
+  },
   "license": "MIT"
 }

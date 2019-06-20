@@ -43,7 +43,7 @@
   },
   "marlint": {
     "ignores": [
-      "fixture-error.js"
+      "fixture-error"
     ]
   },
   "homepage": "https://github.com/traveloka/javascript/packages/eslint-config-marlint#readme",
