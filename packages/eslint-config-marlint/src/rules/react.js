@@ -1,5 +1,3 @@
-const INDENT_TYPE = 2;
-
 module.exports = {
   plugins: ['react', 'marlint', 'react-hooks'],
   settings: {

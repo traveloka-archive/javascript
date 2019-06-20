@@ -8,9 +8,10 @@
     "postinstall": "yarn bootstrap",
     "test": "lerna run test && npm run check",
     "precommit": "lint-staged",
-    "check": "npm run check:rules && npm run check:prettier",
+    "check": "npm run check:rules && npm run check:prettier && npm run check:self",
     "check:rules": "./scripts/check-missing-rule packages/eslint-config-marlint/index.js",
-    "check:prettier": "eslint --print-config .eslintrc | eslint-config-prettier-check"
+    "check:prettier": "eslint --print-config .eslintrc | eslint-config-prettier-check",
+    "check:self": "./packages/marlint/cli.js --quiet"
   },
   "lint-staged": {
     "*.js": [
