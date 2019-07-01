@@ -19,15 +19,15 @@ const DEFAULT_IGNORES = [
   '{test/,}fixture{s,}/**',
 ];
 
-exports.lintText = function lintText(str, runtimeOpts) {
-  const cwd = path.resolve(runtimeOpts.cwd || process.cwd())
+exports.lintText = function lintText(str, options) {
+  const cwd = path.resolve(options.cwd || process.cwd())
 
-  const filePath = runtimeOpts.filename;
+  const filePath = options.filename;
   const absolutePath = path.resolve(cwd, filePath);
 
   const pkgOpts = pkgConf.sync('marlint', { cwd });
   const isTypescript = filePath.endsWith('.ts') || filePath.endsWith('.tsx');
-  const defaultOpts = eslint.generateOpts({ ...pkgOpts, typescript: isTypescript }, runtimeOpts);
+  const defaultOpts = eslint.generateOpts({ ...pkgOpts, typescript: isTypescript }, options);
 
   const workspacePaths = workspace.getPaths({ cwd });
 
@@ -43,8 +43,8 @@ exports.lintText = function lintText(str, runtimeOpts) {
     const mergedOpts = {
       eslint: {
         ...defaultOpts.eslint,
-        rules: { ...defaultOpts.eslint.rules, ...workspace.rules },
-        globals: defaultOpts.eslint.globals.concat(workspaceOpts.globals),
+        rules: { ...defaultOpts.eslint.rules, ...workspaceOpts.rules },
+        globals: defaultOpts.eslint.globals.concat(workspaceOpts.globals || []),
       }
     };
     const engine = new CLIEngine(mergedOpts.eslint);
