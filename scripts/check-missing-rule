@@ -40,7 +40,8 @@ const ruleFinder = getRuleFinder(specifiedFile);
 const missingRules = ruleFinder.getUnusedRules()
 .filter(rule => DEPRECATED_RULES.indexOf(rule) === -1)
 .filter(rule => EXPERIMENTAL_RULES.indexOf(rule) === -1)
-.filter(rule => !rule.startsWith('lodash/'));
+.filter(rule => !rule.startsWith('lodash/'))
+.filter(rule => !rule.startsWith('react-native/'));
 
 if (missingRules.length) {
   console.log(`New rules to add to the config: ${missingRules.join(', ')}.`);
