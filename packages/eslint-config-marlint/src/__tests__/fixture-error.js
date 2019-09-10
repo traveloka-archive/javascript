@@ -1,5 +1,6 @@
 /* @flow */
 import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { render } from 'react-dom';
 
 // no named imports from lodash
@@ -105,3 +106,21 @@ function Bar(props) {
   // warn missing deps (react-hooks/exhaustive-deps)
   useEffect(() => void props.foo, []);
 }
+
+// react-native/no-unused-styles
+function UnusedStyle() {
+  return (
+    <View style={Style.container}>
+      <Text>{'test'}</Text>
+    </View>
+  )
+}
+
+const Style = StyleSheet.create({
+  container: {
+    width: 100,
+  },
+  text: {
+    color: 'blue',
+  }
+});
