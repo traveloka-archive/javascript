@@ -4,9 +4,22 @@ const globby = require('globby');
 const eslint = require('./eslint')
 
 function getPackageEntries(workspacePaths, cwd) {
-  return workspacePaths.reduce((result, workspace) => {
-    return result.concat(globby.sync(workspace, { onlyDirectories: true, cwd }))
-  }, []);
+  const workspaceSet = workspacePaths.reduce((result, workspace) => {
+    // Each workspace must have their own package.json
+    // By using this heuristic, false positives are removed and lint executes faster
+    globby
+      .sync(path.join(workspace, '/package.json'), { cwd });
+      // we get directories by simply removing /package.json from the path
+      .map(path => path.replace('/package.json', ''))
+      // then we add to Set to remove duplicates
+      .forEach(dir => {
+        result.add(dir)
+      });
+
+    return result;
+  }, new Set());
+
+  return Array.from(workspaceSet);
 }
 
 exports.getPaths = function getWorkspacePaths(opts) {
@@ -35,7 +48,7 @@ exports.getPaths = function getWorkspacePaths(opts) {
   }
 }
 
-function groupPathsByPackage(paths, workspacePaths, defaultOpts) {
+exports.groupPathsByPackage = function groupPathsByPackage(paths, workspacePaths, defaultOpts) {
   const packages = workspacePaths.map(workspacePath => {
     const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath })
     const mergedOpts = {
@@ -70,13 +83,4 @@ function groupPathsByPackage(paths, workspacePaths, defaultOpts) {
   });
 
   return packages;
-}
-
-exports.runESLint = function runESLintAcrossWorkspace(paths, workspacePaths, defaultOpts) {
-  const packages = groupPathsByPackage(paths, workspacePaths, defaultOpts);
-  return Promise.all(
-    packages.map(pkg => {
-      return eslint.run(pkg.paths, pkg.options);
-    })
-  ).then(eslint.mergeReports);
 }

@@ -87,22 +87,27 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
 
     // if it's a workspace, allow override root config via workspace package.json
     if (workspacePaths.length !== 0) {
-      return Promise.all([
-        workspace.runESLint(pathsByExt.js, workspacePaths, jsOptions),
-        workspace.runESLint(pathsByExt.ts, workspacePaths, tsOptions),
-      ]).then(eslint.mergeReports);
+      const jsJobGroups = workspace.groupPathsByPackage(pathsByExt.js, workspacePaths, jsOptions);
+      const tsJobGroups = workspace.groupPathsByPackage(pathsByExt.js, workspacePaths, jsOptions);
+      return eslint.run(jsJobGroups.concat(tsJobGroups))
     }
 
     // if ts file exists, run them in parallel with JS
     if (pathsByExt.ts.length > 0) {
-      return Promise.all([
-        eslint.run(pathsByExt.ts, tsOptions),
-        eslint.run(pathsByExt.js, jsOptions),
-      ]).then(eslint.mergeReports);
+      return eslint.run([
+        {
+          paths: pathsByExt.js,
+          options: jsOptions,
+        },
+        {
+          paths: pathsByExt.ts,
+          options: jsOptions,
+        }
+      ]);
     }
 
     // no ts file, pass original paths
-    return eslint.run(paths, jsOptions);
+    return eslint.run([{ paths, options: jsOptions }]);
   });
 };
 

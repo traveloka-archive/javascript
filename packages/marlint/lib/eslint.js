@@ -2,7 +2,9 @@ const os = require('os');
 const micromatch = require('micromatch');
 const Worker = require('jest-worker').default;
 
-const MAX_WORKER = os.cpus().length;
+// Some CI doesn't return correct CPU core, this allow us to override
+const MAX_WORKER = process.env.MAX_CPU_CORE || os.cpus().length - 1;
+const MAX_FILES_PER_BATCH = 250;
 
 const worker = new Worker(require.resolve('../worker'), {
   exposedMethods: ['lint'],
@@ -10,31 +12,39 @@ const worker = new Worker(require.resolve('../worker'), {
 });
 
 function runESLintInsideWorker(paths, options) {
-  const ignores = options.marlint.ignores;
-
-  if (ignores) {
-    // eslint-disable-next-line no-param-reassign
-    paths = paths.filter(path => {
-      return !ignores.some(pattern => {
-        return micromatch.contains(path, pattern)
-      });
-    });
-  }
-
-  // we can't fill with empty array because reference
-  const jobs = Array(MAX_WORKER)
-    .fill('x')
-    .map(x => []);
-
   return Promise.all(
-    paths
-      .reduce((jobs, path, index) => {
-        // insert job round robin
-        const idx = index % MAX_WORKER;
-        jobs[idx].push(path);
-        return jobs;
-      }, jobs)
-      .map(paths => worker.lint(paths, options.eslint))
+    jobs.map(job => {
+      let paths = job.paths;
+      const ignores = job.options.marlint.ignores;
+
+      if (ignores) {
+        // eslint-disable-next-line no-param-reassign
+        paths = paths.filter(path => {
+          return !ignores.some(pattern => {
+            return micromatch.contains(path, pattern)
+          });
+        });
+      }
+      
+
+      // Instead of 1 worker for 1 package, or 1 worker for 1 path,
+      // we batch the jobs for multiple paths at once. 
+      const numOfBatch = Math.ceil(paths.length / MAX_FILES_PER_BATCH);
+      const batches = Array(numOfBatch)
+        .fill('')
+        .map(_ => [])
+
+      return Promise.all(
+        paths
+          .reduce((jobs, path, index) => {
+            // round robin insert
+            const idx = index % numOfBatch;
+            batches[idx].push(path);
+            return batches;
+          }, batches)
+          .map(batch => worker.lint(batch, job.options.eslint))
+      ).then(mergeESLintReports)
+    })
   ).then(mergeESLintReports);
 }
 
