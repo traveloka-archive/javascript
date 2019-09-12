@@ -11,7 +11,7 @@ const worker = new Worker(require.resolve('../worker'), {
   numWorkers: MAX_WORKER,
 });
 
-function runESLintInsideWorker(paths, options) {
+function runESLintInsideWorker(jobs) {
   return Promise.all(
     jobs.map(job => {
       let paths = job.paths;
@@ -21,18 +21,17 @@ function runESLintInsideWorker(paths, options) {
         // eslint-disable-next-line no-param-reassign
         paths = paths.filter(path => {
           return !ignores.some(pattern => {
-            return micromatch.contains(path, pattern)
+            return micromatch.contains(path, pattern);
           });
         });
       }
-      
 
       // Instead of 1 worker for 1 package, or 1 worker for 1 path,
-      // we batch the jobs for multiple paths at once. 
+      // we batch the jobs for multiple paths at once.
       const numOfBatch = Math.ceil(paths.length / MAX_FILES_PER_BATCH);
       const batches = Array(numOfBatch)
         .fill('')
-        .map(_ => [])
+        .map(_ => []);
 
       return Promise.all(
         paths
@@ -43,7 +42,7 @@ function runESLintInsideWorker(paths, options) {
             return batches;
           }, batches)
           .map(batch => worker.lint(batch, job.options.eslint))
-      ).then(mergeESLintReports)
+      ).then(mergeESLintReports);
     })
   ).then(mergeESLintReports);
 }
