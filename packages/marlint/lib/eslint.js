@@ -22,8 +22,8 @@ function filterPaths(paths, ignores) {
 function runESLintInsideWorker(groups) {
   const jobs = groups.map(group => {
     const options = group.options;
-    const paths = options.ignores
-      ? filterPaths(group.paths, options.ignores)
+    const paths = options.marlint.ignores
+      ? filterPaths(group.paths, options.marlint.ignores)
       : group.paths;
 
     // Instead of 1 worker for 1 package, or 1 worker for 1 path,
