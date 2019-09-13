@@ -1,7 +1,6 @@
 const path = require('path');
 const pkgConf = require('pkg-conf');
 const globby = require('globby');
-const eslint = require('./eslint');
 
 function getPackageEntries(workspacePaths, cwd) {
   const workspaceSet = workspacePaths.reduce((result, workspace) => {
