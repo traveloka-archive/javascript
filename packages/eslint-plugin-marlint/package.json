@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-marlint",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Traveloka custom eslint plugin",
   "keywords": [
     "eslint",
