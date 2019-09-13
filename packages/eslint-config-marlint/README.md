@@ -24,10 +24,10 @@ Add some ESLint config to your `package.json`:
 
 ```json
 {
-	"name": "your-project-name",
-	"eslintConfig": {
-		"extends": "marlint"
-	}
+  "name": "your-project-name",
+  "eslintConfig": {
+    "extends": "marlint"
+  }
 }
 ```
 
@@ -35,7 +35,7 @@ Or to `.eslintrc`:
 
 ```json
 {
-	"extends": "marlint"
+  "extends": "marlint"
 }
 ```
 

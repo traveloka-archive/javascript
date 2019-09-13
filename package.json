@@ -7,17 +7,16 @@
     "clean": "lerna clean",
     "postinstall": "yarn bootstrap",
     "test": "lerna run test && npm run check",
-    "precommit": "lint-staged",
+    "fmt": "prettier **/*.{js,json,md} --write",
     "check": "npm run check:rules && npm run check:prettier && npm run check:self",
     "check:rules": "./scripts/check-missing-rule packages/eslint-config-marlint/index.js",
     "check:prettier": "eslint --print-config .eslintrc | eslint-config-prettier-check",
     "check:self": "./packages/marlint/cli.js --quiet --verbose"
   },
-  "lint-staged": {
-    "*.js": [
-      "prettier --trailing-comma es5 --single-quote --write",
-      "git add"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -34,9 +33,9 @@
     "eslint-plugin-react": "^7.2.1",
     "eslint-plugin-react-hooks": "^1.6.0",
     "eslint-plugin-react-native": "^3.7.0",
-    "husky": "^0.14.3",
+    "husky": "^3.0.5",
     "lerna": "^3.13.1",
-    "lint-staged": "^4.0.4",
-    "prettier": "^1.6.0"
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
   }
 }

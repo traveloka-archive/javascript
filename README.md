@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/traveloka/javascript.svg?branch=master)](https://travis-ci.org/traveloka/javascript)
 
-JavaScript code standard in Traveloka is enforced using tool called `marlint` which is a CLI based linter by extending [ESLint](http://eslint.org/) to support React, Flowtype, and ES2015+ natively. Because this standard doesn't enforce code style, you can use `marlint` and [`prettier`](https://github.com/prettier/prettier) directly without having to configure anything.
+JavaScript code standard in Traveloka is enforced using tool called `marlint` which is a CLI based linter by extending [ESLint](http://eslint.org/) to support React, Typescript, Flowtype, and ES2015+ natively. Because this standard doesn't enforce code style, you can use `marlint` and [`prettier`](https://github.com/prettier/prettier) directly without having to configure anything.
+
+Another main features is `marlint` support yarn workspace or lerna monorepo, so you can use different configuration for each packages. To improve performance, `marlint` lint your files in parallel using `jest-worker` so you'll get noticeable performance gain in larger codebase.
 
 ## Packages
 
@@ -30,17 +32,17 @@ $ cd javascript
 # Install dependencies
 # This will automatically run `lerna bootstrap` which will install all package
 # dependencies and link all packages together
-$ npm install
+$ yarn
 ```
 
-To run test use `npm test` in root directory, or if you want to run test manually
-for single package just change directory to that package and run `npm test` inside
+To run test use `yarn test` in root directory, or if you want to run test manually
+for single package just change directory to that package and run `yarn test` inside
 each package directory.
 
 ## Editor Integration
 
+- [VSCode](https://github.com/traveloka/vscode-marlint) (**recommended**)
 - [Atom](https://github.com/traveloka/atom-linter-marlint)
-- [VSCode](https://github.com/traveloka/vscode-marlint)
 
 For other editor, you can install `marlint` globally, then use eslint config from `marlint` using standard eslint editor plugin.
 
