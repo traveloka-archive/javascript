@@ -95,8 +95,7 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
     if (verbose) {
       if (pathsByExt.ts.length > 0) {
         console.log(
-          `Found ${pathsByExt.ts.length} TS files and ${pathsByExt.js
-            .length} JS files`
+          `Found ${pathsByExt.ts.length} TS files and ${pathsByExt.js.length} JS files`
         );
       } else {
         console.log(`${paths.length} JS files found`);

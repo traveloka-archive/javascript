@@ -12,7 +12,6 @@ const DEPRECATED_RULES = [
   'babel/func-params-comma-dangle',
   'babel/array-bracket-spacing',
   'babel/flow-object-type',
-  // flowtype
 ];
 
 // Rules with false positives, missing docs or no clear use case. Revisit later
@@ -29,6 +28,23 @@ const EXPERIMENTAL_RULES = [
   'jsx-a11y/no-noninteractive-tabindex',
   'jsx-a11y/no-redundant-roles',
   'react/no-unused-state',
+  // new rules, TODO check
+  'jsx-a11y/control-has-associated-label',
+  'jsx-a11y/label-has-associated-control',
+  'react/button-has-type',
+  'react/destructuring-assignment',
+  'react/forbid-dom-props',
+  'react/jsx-curly-brace-presence',
+  'react/jsx-curly-newline',
+  'react/jsx-fragments',
+  'react/jsx-max-depth',
+  'react/jsx-props-no-spreading',
+  'react/jsx-sort-default-props',
+  'react/no-access-state-in-setstate',
+  'react/no-this-in-sfc',
+  'react/prefer-read-only-props',
+  'react/state-in-constructor',
+  'react/static-property-placement',
 ];
 
 // Prints rules recognized by ESLint that don't appear in the given config
@@ -40,6 +56,7 @@ const ruleFinder = getRuleFinder(specifiedFile);
 const missingRules = ruleFinder.getUnusedRules()
 .filter(rule => DEPRECATED_RULES.indexOf(rule) === -1)
 .filter(rule => EXPERIMENTAL_RULES.indexOf(rule) === -1)
+.filter(rule => !rule.startsWith('flowtype/'))
 .filter(rule => !rule.startsWith('lodash/'))
 .filter(rule => !rule.startsWith('react-native/'));
 

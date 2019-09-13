@@ -9,11 +9,12 @@ function runEslint(file, conf = DEFAULT_CONFIG) {
   const str = fs.readFileSync(file, { encoding: 'utf-8' });
   const linter = new eslint.CLIEngine({
     useEslintrc: false,
-    configFile: tempWrite.sync(JSON.stringify(conf))
+    configFile: tempWrite.sync(JSON.stringify(conf)),
   });
 
-  return linter.executeOnText(str).results[0].messages
-    // disable marlint plugin for now because eslint failed to load it
+  return linter
+    .executeOnText(str)
+    .results[0].messages // disable marlint plugin for now because eslint failed to load it
     .filter(m => !m.ruleId.startsWith('marlint'))
     .sort((m1, m2) => {
       // sort by line number first

@@ -21,10 +21,9 @@ No decision-making. No `.eslintrc`, `.jshintrc`, `.jscsrc` to manage. It just wo
 - Space after keyword `if (condition) {}`
 - Always `===` instead of `==`
 
-*Any of these can be [overridden](#rules) if necessary.*
+_Any of these can be [overridden](#rules) if necessary._
 
 Check out an [example](index.js) and the [ESLint rules](https://github.com/traveloka/eslint-config-marlint/blob/master/index.js).
-
 
 ## Install
 
@@ -93,7 +92,7 @@ Some [paths](https://github.com/sindresorhus/marlint/blob/4a0db396766118d7918577
 
 ### rules
 
-Type: `object`  
+Type: `object`
 
 Override any of the [default rules](https://github.com/sindresorhus/eslint-config-marlint/blob/master/index.js). See the [ESLint docs](http://eslint.org/docs/rules/) for more info on each rule.
 

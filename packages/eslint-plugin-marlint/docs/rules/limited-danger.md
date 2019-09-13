@@ -12,13 +12,13 @@ and `style` tag.
 Examples of **incorrect** code for this rule:
 
 ```js
-<div dangerouslySetInnerHTML={{ __html: "" }} />;
+<div dangerouslySetInnerHTML={{ __html: '' }} />
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
-<script dangerouslySetInnerHTML={{ __html: "" }} />;
+<script dangerouslySetInnerHTML={{ __html: '' }} />
 ```
 
 ## Rule Options
@@ -40,4 +40,4 @@ When you want to use `dangerouslySetInnerHTML` everywhere
 
 ## Further Reading
 
-* [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+- [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)

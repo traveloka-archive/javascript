@@ -6,9 +6,6 @@ module.exports = {
     },
   },
   rules: {
-    // Use bool for boolean type
-    'flowtype/boolean-style': ['error', 'bool'],
-
     // Mark flow types as defined
     'flowtype/define-flow-type': 1,
 

@@ -2,8 +2,8 @@ module.exports = {
   plugins: ['react', 'marlint', 'react-hooks'],
   settings: {
     react: {
-      version: 'detect'
-    }
+      version: 'detect',
+    },
   },
   // View link below for react rules documentation
   // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
@@ -142,7 +142,10 @@ module.exports = {
 
     // Only include JSX inside .js or .jsx file
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      'error',
+      { extensions: ['.js', '.jsx', '.tsx'] },
+    ],
 
     // Disabled, covered in prettier
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-first-prop-new-line.md
@@ -247,7 +250,10 @@ module.exports = {
     'react/no-will-update-set-state': 'error',
 
     // hooks
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+
+    // Warn for unsafe lifecycle
+    'react/no-unsafe': 'warn',
   },
 };
