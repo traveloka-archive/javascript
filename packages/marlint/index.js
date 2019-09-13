@@ -20,32 +20,37 @@ const DEFAULT_IGNORES = [
 ];
 
 exports.lintText = function lintText(str, options) {
-  const cwd = path.resolve(options.cwd || process.cwd())
+  const cwd = path.resolve(options.cwd || process.cwd());
 
   const filePath = options.filename;
   const absolutePath = path.resolve(cwd, filePath);
 
   const pkgOpts = pkgConf.sync('marlint', { cwd });
   const isTypescript = filePath.endsWith('.ts') || filePath.endsWith('.tsx');
-  const defaultOpts = eslint.generateOpts({ ...pkgOpts, typescript: isTypescript }, options);
+  const defaultOpts = eslint.generateOpts(
+    { ...pkgOpts, typescript: isTypescript },
+    options
+  );
 
   const workspacePaths = workspace.getPaths({ cwd });
 
   if (workspacePaths.length > 0) {
-    const workspacePath = workspacePaths.find(workspacePath => absolutePath.includes(workspacePath));
+    const workspacePath = workspacePaths.find(workspacePath =>
+      absolutePath.includes(workspacePath)
+    );
 
     if (!workspacePath) {
       const engine = new CLIEngine(defaultOpts.eslint);
       return engine.executeOnText(str, filePath);
     }
 
-    const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath })
+    const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath });
     const mergedOpts = {
       eslint: {
         ...defaultOpts.eslint,
         rules: { ...defaultOpts.eslint.rules, ...workspaceOpts.rules },
         globals: defaultOpts.eslint.globals.concat(workspaceOpts.globals || []),
-      }
+      },
     };
     const engine = new CLIEngine(mergedOpts.eslint);
     return engine.executeOnText(str, filePath);
@@ -59,10 +64,15 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
   const pkgOpts = pkgConf.sync('marlint', { cwd: process.cwd() });
   const workspacePaths = workspace.getPaths({ cwd: process.cwd() });
   const ignore = DEFAULT_IGNORES.concat(pkgOpts.ignores || []);
+  const verbose = runtimeOpts.verbose;
 
   let glob = patterns;
   if (patterns.length === 0) {
     glob = '**/*.{js,jsx,ts,tsx}';
+  }
+
+  if (verbose) {
+    console.log(`Finding files to lint...`);
   }
 
   return globby(glob, { ignore }).then(paths => {
@@ -82,27 +92,61 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
       }
     });
 
+    if (verbose) {
+      if (pathsByExt.ts.length > 0) {
+        console.log(
+          `Found ${pathsByExt.ts.length} TS files and ${pathsByExt.js
+            .length} JS files`
+        );
+      } else {
+        console.log(`${paths.length} JS files found`);
+      }
+    }
+
     const jsOptions = eslint.generateOpts(pkgOpts, runtimeOpts);
-    const tsOptions = eslint.generateOpts({ ...pkgOpts, typescript: true }, runtimeOpts);
+    const tsOptions = eslint.generateOpts(
+      { ...pkgOpts, typescript: true },
+      runtimeOpts
+    );
 
     // if it's a workspace, allow override root config via workspace package.json
     if (workspacePaths.length !== 0) {
-      return Promise.all([
-        workspace.runESLint(pathsByExt.js, workspacePaths, jsOptions),
-        workspace.runESLint(pathsByExt.ts, workspacePaths, tsOptions),
-      ]).then(eslint.mergeReports);
+      if (verbose) {
+        console.log(
+          `Workspace (yarn/lerna) detected, found ${workspacePaths.length} packages`
+        );
+      }
+
+      const jsConfigs = workspace.groupPathsByPackage(
+        pathsByExt.js,
+        workspacePaths,
+        jsOptions
+      );
+      const tsConfigs = workspace.groupPathsByPackage(
+        pathsByExt.ts,
+        workspacePaths,
+        tsOptions
+      );
+      const configs = jsConfigs.concat(tsConfigs);
+      return eslint.run(configs);
     }
 
     // if ts file exists, run them in parallel with JS
     if (pathsByExt.ts.length > 0) {
-      return Promise.all([
-        eslint.run(pathsByExt.ts, tsOptions),
-        eslint.run(pathsByExt.js, jsOptions),
-      ]).then(eslint.mergeReports);
+      return eslint.run([
+        {
+          paths: pathsByExt.js,
+          options: jsOptions,
+        },
+        {
+          paths: pathsByExt.ts,
+          options: jsOptions,
+        },
+      ]);
     }
 
     // no ts file, pass original paths
-    return eslint.run(paths, jsOptions);
+    return eslint.run([{ paths, options: jsOptions }]);
   });
 };
 
