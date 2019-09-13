@@ -17,6 +17,7 @@ const cli = meow(
       '  --fix             Automagically fixes code',
       '  --json            Output JSON result to be consumed in other app',
       '  --jsonOutputFile  Specify filename to store the JSON result',
+      '  --verbose         Show debug log',
       '',
       'Examples',
       '  $ marlint',
@@ -28,7 +29,7 @@ const cli = meow(
     ],
   },
   {
-    boolean: ['json'],
+    boolean: ['json', 'verbose'],
   }
 );
 

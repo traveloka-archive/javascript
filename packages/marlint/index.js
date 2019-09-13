@@ -64,13 +64,18 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
   const pkgOpts = pkgConf.sync('marlint', { cwd: process.cwd() });
   const workspacePaths = workspace.getPaths({ cwd: process.cwd() });
   const ignore = DEFAULT_IGNORES.concat(pkgOpts.ignores || []);
+  const verbose = runtimeOpts.verbose;
 
   let glob = patterns;
   if (patterns.length === 0) {
     glob = '**/*.{js,jsx,ts,tsx}';
   }
 
+  console.log(`Finding files to lint...`);
   return globby(glob, { ignore }).then(paths => {
+    if (verbose) {
+    }
+
     // separate between js and ts files because they use different parser
     // and default rules
     const pathsByExt = {
@@ -87,6 +92,17 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
       }
     });
 
+    if (verbose) {
+      if (pathsByExt.ts.length > 0) {
+        console.log(
+          `Found ${pathsByExt.ts.length} TS files and ${pathsByExt.js
+            .length} JS files`
+        );
+      } else {
+        console.log(`${paths.length} JS files found`);
+      }
+    }
+
     const jsOptions = eslint.generateOpts(pkgOpts, runtimeOpts);
     const tsOptions = eslint.generateOpts(
       { ...pkgOpts, typescript: true },
@@ -95,17 +111,24 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
 
     // if it's a workspace, allow override root config via workspace package.json
     if (workspacePaths.length !== 0) {
-      const jsJobGroups = workspace.groupPathsByPackage(
+      if (verbose) {
+        console.log(
+          `Workspace (yarn/lerna) detected, found ${workspacePaths.length} packages`
+        );
+      }
+
+      const jsConfigs = workspace.groupPathsByPackage(
         pathsByExt.js,
         workspacePaths,
         jsOptions
       );
-      const tsJobGroups = workspace.groupPathsByPackage(
+      const tsConfigs = workspace.groupPathsByPackage(
         pathsByExt.ts,
         workspacePaths,
         tsOptions
       );
-      return eslint.run(jsJobGroups.concat(tsJobGroups));
+      const configs = jsConfigs.concat(tsConfigs);
+      return eslint.run(configs);
     }
 
     // if ts file exists, run them in parallel with JS
