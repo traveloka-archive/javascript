@@ -71,11 +71,11 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
     glob = '**/*.{js,jsx,ts,tsx}';
   }
 
-  console.log(`Finding files to lint...`);
-  return globby(glob, { ignore }).then(paths => {
-    if (verbose) {
-    }
+  if (verbose) {
+    console.log(`Finding files to lint...`);
+  }
 
+  return globby(glob, { ignore }).then(paths => {
     // separate between js and ts files because they use different parser
     // and default rules
     const pathsByExt = {
