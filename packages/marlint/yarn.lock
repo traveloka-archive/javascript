@@ -600,10 +600,10 @@ escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-marlint@^6.5.3:
-  version "6.5.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-marlint/-/eslint-config-marlint-6.5.3.tgz#aadbc9a7f7a3acbc996f6e731c3e73e3fa01c713"
-  integrity sha512-CMfgo+ylgO60iNwkybQIewDaw5q5ovDH9PEvLsG/7VBeVEbjhgqt8xvxviFFQRWXxnQ2oJjXLufI5LQKL3KxjA==
+eslint-config-marlint@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-marlint/-/eslint-config-marlint-6.6.0.tgz#82d34937aeb5e90b3093f07bf7168be185db76db"
+  integrity sha512-xNTMvg7MVmg5Uk5IwKmolPTnrNGJ/qOEBCZSw/G/4B8ynonEuwRAJi6BW3Ebyit3oLOZZKz93tteo4wFHiJIlw==
 
 eslint-config-prettier@^2.10.0:
   version "2.10.0"
@@ -659,10 +659,10 @@ eslint-plugin-lodash@^5.1.0:
   dependencies:
     lodash "4.17.11"
 
-eslint-plugin-marlint@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-marlint/-/eslint-plugin-marlint-0.1.4.tgz#2938532c7095d07d52a304331337d712f538d0c3"
-  integrity sha512-XoRV6mlKfX1sCHGQdYZzhqbfs/q5NSTCgB2noFqsufKsBqyhcaDCmlF7PgUi+T/AoVbJ60ncmh/T7nhuNh7ESw==
+eslint-plugin-marlint@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-marlint/-/eslint-plugin-marlint-0.1.5.tgz#43eee642b8affd0381ef212f9fcc205960ede3b5"
+  integrity sha512-54O1zbjQ0UCVk/T/rFQb69Cpt0FMmu0/wNMzrIDvXCUvw72RYJ9Om2hsqnV4P5UgWY5v+pypO7DybjM83/lLjw==
   dependencies:
     requireindex "^1.1.0"
 
@@ -670,6 +670,18 @@ eslint-plugin-react-hooks@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.6.0.tgz#348efcda8fb426399ac7b8609607c7b4025a6f5f"
   integrity sha512-lHBVRIaz5ibnIgNG07JNiAuBUeKhEf8l4etNx5vfAEwqQ5tcuK3jV9yjmopPgQDagQb7HwIuQVsE3IVcGrRnag==
+
+eslint-plugin-react-native-globals@^0.1.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-native-globals/-/eslint-plugin-react-native-globals-0.1.2.tgz#ee1348bc2ceb912303ce6bdbd22e2f045ea86ea2"
+  integrity sha512-9aEPf1JEpiTjcFAmmyw8eiIXmcNZOqaZyHO77wgm0/dWfT/oxC1SrIq8ET38pMxHYrcB6Uew+TzUVsBeczF88g==
+
+eslint-plugin-react-native@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-3.7.0.tgz#7e2cc1f3cf24919c4c0ea7fac13301e7444e105f"
+  integrity sha512-krLtQmGih/uJDPxF8DBpnU8J3kRUsDm/Dey5yEhOO8LN1I3Wesbk4PGCg8Zah57azKFU+9YtGooFjJcDJWUs+g==
+  dependencies:
+    eslint-plugin-react-native-globals "^0.1.1"
 
 eslint-plugin-react@^7.12.4:
   version "7.12.4"

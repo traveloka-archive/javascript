@@ -54,6 +54,7 @@
     "eslint-plugin-marlint": "^0.1.5",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.6.0",
+    "eslint-plugin-react-native": "^3.7.0",
     "globby": "^10.0.1",
     "jest-worker": "^24.9.0",
     "lodash.merge": "^4.6.1",
