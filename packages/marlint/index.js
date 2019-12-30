@@ -139,7 +139,7 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
         },
         {
           paths: pathsByExt.ts,
-          options: jsOptions,
+          options: tsOptions,
         },
       ]);
     }
