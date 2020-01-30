@@ -58,9 +58,9 @@ module.exports = {
     // http://eslint.org/docs/rules/eqeqeq
     eqeqeq: ['error', 'smart'],
 
-    // Return early, reduce cyclomatic complexity and indent level
+    // Sometimes allowing else-return increases code readability
     // http://eslint.org/docs/rules/no-else-return
-    'no-else-return': 'error',
+    'no-else-return': 'off',
 
     // Put comment inside of empty function
     // http://eslint.org/docs/rules/no-empty-function
@@ -108,9 +108,10 @@ module.exports = {
     // http://eslint.org/docs/rules/no-magic-numbers
     'no-magic-numbers': 'off',
 
-    // Don't reassign function arguments directly for predictability and perf
+    // Allowing param-reassign simplifies some functions (e.g. `Array.reduce` with object accumulator)
+    // Setting to WARN in case this is unintended (e.g. variable name typo)
     // http://eslint.org/docs/rules/no-param-reassign
-    'no-param-reassign': ['error', { props: false }],
+    'no-param-reassign': ['warn'],
 
     // Do not use assignment on return value
     // http://eslint.org/docs/rules/no-return-assign
@@ -126,7 +127,13 @@ module.exports = {
 
     // Prevent possible logic error except for short ciruit
     // http://eslint.org/docs/rules/no-unused-expressions
-    'no-unused-expressions': ['error', { allowShortCircuit: true }],
+    'no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+      },
+    ],
 
     // Only use .call and .apply for adding context
     // http://eslint.org/docs/rules/no-useless-call
@@ -229,9 +236,9 @@ module.exports = {
     // http://eslint.org/docs/rules/no-negated-condition
     'no-negated-condition': 'warn',
 
-    // Don't nest ternary operation
+    // DISABLED to allow one-liner const declaration instead of 'forced' if-block
     // http://eslint.org/docs/rules/no-nested-ternary
-    'no-nested-ternary': 'error',
+    'no-nested-ternary': 'off',
 
     // Simplify ternary if possible
     // http://eslint.org/docs/rules/no-unneeded-ternary
@@ -253,9 +260,9 @@ module.exports = {
     // http://eslint.org/docs/rules/constructor-super
     'constructor-super': 'warn',
 
-    // Merge all import from same module
+    // Allows separating import from the same source (useful when you try to group imports)
     // http://eslint.org/docs/rules/no-duplicate-imports
-    'no-duplicate-imports': 'error',
+    'no-duplicate-imports': 'off',
 
     // Use let/const
     // http://eslint.org/docs/rules/no-var
