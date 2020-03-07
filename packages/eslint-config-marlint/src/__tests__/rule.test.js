@@ -1,15 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const eslint = require('eslint');
-const tempWrite = require('temp-write');
 
-const DEFAULT_CONFIG = require('../../index');
-
-function runEslint(file, conf = DEFAULT_CONFIG) {
+function runEslint(file) {
   const str = fs.readFileSync(file, { encoding: 'utf-8' });
   const linter = new eslint.CLIEngine({
     useEslintrc: false,
-    configFile: tempWrite.sync(JSON.stringify(conf)),
+    configFile: path.join(__dirname, '../../index.js'),
   });
 
   return linter
