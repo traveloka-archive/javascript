@@ -46,9 +46,9 @@ module.exports = {
     // http://eslint.org/docs/rules/array-callback-return
     'array-callback-return': 'error',
 
-    // Always add default case in switch statements
+    // Add default case in switch statements
     // http://eslint.org/docs/rules/default-case
-    'default-case': ['error', { commentPattern: '^no default$' }],
+    'default-case': ['warn', { commentPattern: '^no default$' }],
 
     // Always use dot notation when accessing object prop except for reserved word
     // http://eslint.org/docs/rules/dot-notation
@@ -60,7 +60,7 @@ module.exports = {
 
     // Return early, reduce cyclomatic complexity and indent level
     // http://eslint.org/docs/rules/no-else-return
-    'no-else-return': 'error',
+    'no-else-return': 'warn',
 
     // Put comment inside of empty function
     // http://eslint.org/docs/rules/no-empty-function
@@ -108,9 +108,9 @@ module.exports = {
     // http://eslint.org/docs/rules/no-magic-numbers
     'no-magic-numbers': 'off',
 
-    // Don't reassign function arguments directly for predictability and perf
+    // Reassigning function arguments could affect predictability and perf
     // http://eslint.org/docs/rules/no-param-reassign
-    'no-param-reassign': ['error', { props: false }],
+    'no-param-reassign': 'warn',
 
     // Do not use assignment on return value
     // http://eslint.org/docs/rules/no-return-assign
@@ -227,11 +227,11 @@ module.exports = {
 
     // Use positive comparison if convenient
     // http://eslint.org/docs/rules/no-negated-condition
-    'no-negated-condition': 'warn',
+    'no-negated-condition': 'off',
 
-    // Don't nest ternary operation
+    // Can be discussed in code review
     // http://eslint.org/docs/rules/no-nested-ternary
-    'no-nested-ternary': 'error',
+    'no-nested-ternary': 'off',
 
     // Simplify ternary if possible
     // http://eslint.org/docs/rules/no-unneeded-ternary
@@ -253,9 +253,9 @@ module.exports = {
     // http://eslint.org/docs/rules/constructor-super
     'constructor-super': 'warn',
 
-    // Merge all import from same module
+    // Allow multiple imports, useful for grouping imports, especially for invalid types
     // http://eslint.org/docs/rules/no-duplicate-imports
-    'no-duplicate-imports': 'error',
+    'no-duplicate-imports': 'off',
 
     // Use let/const
     // http://eslint.org/docs/rules/no-var
@@ -271,9 +271,9 @@ module.exports = {
       },
     ],
 
-    // Use const for non-modified variables
+    // Use const for non-modified variables, but not strict usage
     // http://eslint.org/docs/rules/prefer-const
-    'prefer-const': 'error',
+    'prefer-const': 'warn',
 
     // Use rest operator as function params instead of using arguments
     // http://eslint.org/docs/rules/prefer-rest-params

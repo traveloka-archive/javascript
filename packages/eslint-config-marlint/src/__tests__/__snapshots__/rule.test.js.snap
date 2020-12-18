@@ -81,12 +81,6 @@ Array [
     "severity": 2,
   },
   Object {
-    "column": 27,
-    "line": 56,
-    "ruleId": "react/jsx-handler-names",
-    "severity": 2,
-  },
-  Object {
     "column": 1,
     "line": 64,
     "ruleId": "no-var",
@@ -96,7 +90,7 @@ Array [
     "column": 5,
     "line": 68,
     "ruleId": "prefer-const",
-    "severity": 2,
+    "severity": 1,
   },
   Object {
     "column": 3,
