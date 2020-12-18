@@ -1,21 +1,21 @@
 const fs = require('fs');
 const path = require('path');
-const eslint = require('eslint');
+const { ESLint } = require('eslint');
 const tempWrite = require('temp-write');
 
-const DEFAULT_CONFIG = require('../../index');
+const DEFAULT_CONFIG = require.resolve('../../index');
 
-function runEslint(file, conf = DEFAULT_CONFIG) {
+async function runEslint(file, configFile = DEFAULT_CONFIG) {
   const str = fs.readFileSync(file, { encoding: 'utf-8' });
-  const linter = new eslint.CLIEngine({
+  const linter = new ESLint({
     useEslintrc: false,
-    configFile: tempWrite.sync(JSON.stringify(conf)),
+    overrideConfigFile: configFile,
   });
 
-  return linter
-    .executeOnText(str)
-    .results[0].messages // disable marlint plugin for now because eslint failed to load it
-    .filter(m => !m.ruleId.startsWith('marlint'))
+  const results = await linter.lintText(str);
+
+  return results[0].messages
+    .filter((m) => !m.ruleId.startsWith('marlint'))
     .sort((m1, m2) => {
       // sort by line number first
       if (m1.line > m2.line) {
@@ -48,7 +48,7 @@ it('block offending rule', async () => {
   const file = path.join(__dirname, './fixture-error.js');
   let errors = await runEslint(file);
 
-  errors = errors.map(err => ({
+  errors = errors.map((err) => ({
     ruleId: err.ruleId,
     severity: err.severity,
     line: err.line,

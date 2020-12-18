@@ -44,9 +44,6 @@ module.exports = {
     // Marks flow type alias as used
     'flowtype/use-flow-type': 1,
 
-    // Only use flow syntax with explicit @flow tag
-    'flowtype/no-types-missing-file-annotation': 'error',
-
     // Allow flow to infer return types
     'flowtype/require-return-type': 'off',
   },

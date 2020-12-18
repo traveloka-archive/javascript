@@ -3,10 +3,11 @@
 const path = require('path');
 const globby = require('globby');
 const pkgConf = require('pkg-conf');
-const CLIEngine = require('eslint').CLIEngine;
+const ESLint = require('eslint').ESLint;
 
 const eslint = require('./lib/eslint');
 const workspace = require('./lib/workspace');
+const toWritableGlobal = require('./lib/toWritableGlobal');
 
 const DEFAULT_IGNORES = [
   '**/node_modules/**',
@@ -35,30 +36,38 @@ exports.lintText = function lintText(str, options) {
   const workspacePaths = workspace.getPaths({ cwd });
 
   if (workspacePaths.length > 0) {
-    const workspacePath = workspacePaths.find(workspacePath =>
+    const workspacePath = workspacePaths.find((workspacePath) =>
       absolutePath.includes(workspacePath)
     );
 
     if (!workspacePath) {
-      const engine = new CLIEngine(defaultOpts.eslint);
-      return engine.executeOnText(str, filePath);
+      const engine = new ESLint(defaultOpts.eslint);
+      return engine.lintText(str, filePath);
     }
 
     const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath });
     const mergedOpts = {
       eslint: {
         ...defaultOpts.eslint,
-        rules: { ...defaultOpts.eslint.rules, ...workspaceOpts.rules },
-        globals: defaultOpts.eslint.globals.concat(workspaceOpts.globals || []),
+        overrideConfig: {
+          rules: { ...defaultOpts.eslint.rules, ...workspaceOpts.rules },
+          globals: Object.assign(
+            {},
+            toWritableGlobal(defaultOpts.eslint.globals),
+            toWritableGlobal(workspaceOpts.globals)
+          ),
+        },
       },
     };
-    const engine = new CLIEngine(mergedOpts.eslint);
-    return engine.executeOnText(str, filePath);
+    const engine = new ESLint(mergedOpts.eslint);
+    return engine.lintText(str, filePath);
   }
 
-  const engine = new CLIEngine(defaultOpts.eslint);
-  return engine.executeOnText(str, filePath);
+  const engine = new ESLint(defaultOpts.eslint);
+  return engine.lintText(str, filePath);
 };
+
+const DEFAULT_GLOB = '**/*.{js,jsx,ts,tsx}';
 
 exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
   const pkgOpts = pkgConf.sync('marlint', { cwd: process.cwd() });
@@ -66,16 +75,24 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
   const ignore = DEFAULT_IGNORES.concat(pkgOpts.ignores || []);
   const verbose = runtimeOpts.verbose;
 
-  let glob = patterns;
+  let glob;
   if (patterns.length === 0) {
-    glob = '**/*.{js,jsx,ts,tsx}';
+    glob = DEFAULT_GLOB;
+  } else {
+    glob = patterns.map((p) => {
+      if (p.includes('.') || p.includes('*')) {
+        return p;
+      } else {
+        return p.endsWith('/') ? p + DEFAULT_GLOB : p + '/' + DEFAULT_GLOB;
+      }
+    })[0];
   }
 
   if (verbose) {
     console.log(`Finding files to lint...`);
   }
 
-  return globby(glob, { ignore }).then(paths => {
+  return globby(glob, { ignore }).then((paths) => {
     // separate between js and ts files because they use different parser
     // and default rules
     const pathsByExt = {
@@ -83,7 +100,7 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
       js: [],
     };
 
-    paths.forEach(path => {
+    paths.forEach((path) => {
       const isTypescript = path.endsWith('.ts') || path.endsWith('.tsx');
       if (isTypescript) {
         pathsByExt.ts.push(path);
@@ -127,28 +144,32 @@ exports.lintFiles = function lintFiles(patterns, runtimeOpts) {
         tsOptions
       );
       const configs = jsConfigs.concat(tsConfigs);
-      return eslint.run(configs);
+      return eslint.run(configs, runtimeOpts);
     }
 
     // if ts file exists, run them in parallel with JS
     if (pathsByExt.ts.length > 0) {
-      return eslint.run([
-        {
-          paths: pathsByExt.js,
-          options: jsOptions,
-        },
-        {
-          paths: pathsByExt.ts,
-          options: tsOptions,
-        },
-      ]);
+      return eslint.run(
+        [
+          {
+            id: '__extensions_js__',
+            paths: pathsByExt.js,
+            options: jsOptions,
+          },
+          {
+            id: '__extensions_js__',
+            paths: pathsByExt.ts,
+            options: tsOptions,
+          },
+        ],
+        runtimeOpts
+      );
     }
 
     // no ts file, pass original paths
-    return eslint.run([{ paths, options: jsOptions }]);
+    return eslint.run(
+      [{ id: '__shared__', paths, options: jsOptions }],
+      runtimeOpts
+    );
   });
 };
-
-exports.getFormatter = CLIEngine.getFormatter;
-exports.getErrorResults = CLIEngine.getErrorResults;
-exports.outputFixes = CLIEngine.outputFixes;

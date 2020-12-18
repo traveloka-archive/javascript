@@ -1,6 +1,9 @@
 const path = require('path');
+const findUp = require('find-up');
+const loadJsonFile = require('load-json-file');
 const pkgConf = require('pkg-conf');
 const globby = require('globby');
+const toWritableGlobal = require('./toWritableGlobal');
 
 function getPackageEntries(workspacePaths, cwd) {
   const workspaceSet = workspacePaths.reduce((result, workspace) => {
@@ -9,9 +12,9 @@ function getPackageEntries(workspacePaths, cwd) {
     globby
       .sync(path.join(workspace, '/package.json'), { cwd })
       // we get directories by simply removing /package.json from the path
-      .map(path => path.replace('/package.json', ''))
+      .map((path) => path.replace('/package.json', ''))
       // then we add to Set to remove duplicates
-      .forEach(dir => {
+      .forEach((dir) => {
         result.add(dir);
       });
 
@@ -52,7 +55,9 @@ exports.groupPathsByPackage = function groupPathsByPackage(
   workspacePaths,
   defaultOpts
 ) {
-  const packages = workspacePaths.map(workspacePath => {
+  const packages = workspacePaths.map((workspacePath) => {
+    const pkgJson = findUp.sync('package.json', { cwd: workspacePath });
+    const pkg = loadJsonFile.sync(pkgJson);
     const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath });
     const mergedOpts = {
       ...defaultOpts,
@@ -63,12 +68,22 @@ exports.groupPathsByPackage = function groupPathsByPackage(
       },
       eslint: {
         ...defaultOpts.eslint,
-        rules: { ...defaultOpts.eslint.rules, ...workspaceOpts.rules },
-        globals: defaultOpts.eslint.globals.concat(workspaceOpts.globals || []),
+        overrideConfig: {
+          rules: {
+            ...defaultOpts.eslint.overrideConfig.rules,
+            ...workspaceOpts.rules,
+          },
+          globals: Object.assign(
+            {},
+            toWritableGlobal(defaultOpts.eslint.overrideConfig.globals),
+            toWritableGlobal(workspaceOpts.globals)
+          ),
+        },
       },
     };
 
     return {
+      id: pkg.name,
       paths: [],
       options: mergedOpts,
     };
@@ -76,13 +91,14 @@ exports.groupPathsByPackage = function groupPathsByPackage(
 
   // add 1 more for grouping files outside workspace
   packages.push({
+    id: '__global_workspace__',
     paths: [],
     options: defaultOpts,
   });
   const fallbackIndex = packages.length - 1;
 
-  paths.forEach(filePath => {
-    const index = workspacePaths.findIndex(workspacePath =>
+  paths.forEach((filePath) => {
+    const index = workspacePaths.findIndex((workspacePath) =>
       filePath.includes(workspacePath)
     );
     const targetIndex = index === -1 ? fallbackIndex : index;

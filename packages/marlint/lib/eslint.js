@@ -1,6 +1,7 @@
 const os = require('os');
 const micromatch = require('micromatch');
 const Worker = require('jest-worker').default;
+const toWritableGlobal = require('./toWritableGlobal');
 
 // Some CI doesn't return correct CPU core, this allow us to override
 const MAX_WORKER = process.env.MAX_CPU_CORE || os.cpus().length;
@@ -12,15 +13,15 @@ const worker = new Worker(require.resolve('../worker'), {
 });
 
 function filterPaths(paths, ignores) {
-  return paths.filter(path => {
-    return !ignores.some(pattern => {
+  return paths.filter((path) => {
+    return !ignores.some((pattern) => {
       return micromatch.contains(path, pattern);
     });
   });
 }
 
-function runESLintInsideWorker(groups) {
-  const jobs = groups.map(group => {
+async function runESLintInsideWorker(groups, runtimeOpts) {
+  const jobs = groups.map(async (group) => {
     const options = group.options;
     const paths = options.marlint.ignores
       ? filterPaths(group.paths, options.marlint.ignores)
@@ -31,7 +32,7 @@ function runESLintInsideWorker(groups) {
     const numOfBatch = Math.ceil(paths.length / MAX_FILES_PER_BATCH);
     const batches = Array(numOfBatch)
       .fill('')
-      .map(_ => []);
+      .map((_) => []);
 
     // Then we distribute the jobs using round-robin mechanism. This is
     // to make sure that each worker contains equal number of paths to be
@@ -47,30 +48,33 @@ function runESLintInsideWorker(groups) {
     // Then we execute them in parallel, and jest-worker will take care
     // of the thread-pool to manage the processes, and we can just simply
     // wait for all batches to be processed and merge the report into one
-    const jobs = batches.map(batch => worker.lint(batch, options.eslint));
-    return Promise.all(jobs).then(mergeESLintReports);
+    if (runtimeOpts.verbose && batches.length > 0) {
+      console.log(`running ${batches.length} jobs in group ${group.id}`);
+    }
+    const jobs = batches.map((batch) => worker.lint(batch, options.eslint));
+    const reports = await Promise.all(jobs);
+    if (runtimeOpts.verbose && batches.length > 0) {
+      console.log(`${batches.length} jobs for group ${group.id} are finished`);
+    }
+    return mergeESLintReports(reports);
   });
 
-  return Promise.all(jobs).then(mergeESLintReports);
+  const reports = await Promise.all(jobs);
+  if (runtimeOpts.verbose) {
+    console.log('jobs finished');
+  }
+  return mergeESLintReports(reports);
 }
 
 function mergeESLintReports(reports) {
   // Merge multiple ESLint reports into a single report
   let results = [];
-  let errorCount = 0;
-  let warningCount = 0;
 
-  for (const report of reports) {
-    results = results.concat(report.results);
-    errorCount += report.errorCount;
-    warningCount += report.warningCount;
+  for (const report of reports.flat()) {
+    results = results.concat(report);
   }
 
-  return {
-    errorCount,
-    warningCount,
-    results,
-  };
+  return results;
 }
 
 function generateESLintOptions(pkgOpts, runtimeOpts) {
@@ -83,9 +87,10 @@ function generateESLintOptions(pkgOpts, runtimeOpts) {
       baseConfig: {
         extends: pkgOpts.typescript ? 'marlint/typescript' : 'marlint',
       },
-      rules: pkgOpts.rules || {},
-      globals: pkgOpts.globals || [],
-      quiet: Boolean(runtimeOpts.quiet),
+      overrideConfig: {
+        rules: pkgOpts.rules || {},
+        globals: toWritableGlobal(pkgOpts.globals),
+      },
       fix: Boolean(runtimeOpts.fix),
     },
   };

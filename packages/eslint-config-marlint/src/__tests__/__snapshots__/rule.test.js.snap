@@ -15,13 +15,13 @@ Array [
     "severity": 2,
   },
   Object {
-    "column": 10,
+    "column": 3,
     "line": 13,
     "ruleId": "react/no-unused-prop-types",
     "severity": 1,
   },
   Object {
-    "column": 10,
+    "column": 3,
     "line": 20,
     "ruleId": "react/no-unused-prop-types",
     "severity": 1,

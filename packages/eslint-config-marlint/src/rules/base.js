@@ -308,5 +308,9 @@ module.exports = {
     // http://eslint.org/docs/rules/no-invalid-this
     'no-invalid-this': 'off',
     'babel/no-invalid-this': 'error',
+
+    // Allow .hasOwnProperty
+    // https://eslint.org/docs/rules/no-prototype-builtins
+    'no-prototype-builtins': 'off',
   },
 };
