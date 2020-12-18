@@ -1,6 +1,6 @@
 {
   "name": "marlint",
-  "version": "7.0.0-alpha.0",
+  "version": "7.0.0-alpha.1",
   "description": "Javascript code linter for traveloka js styleguide",
   "license": "MIT",
   "repository": "traveloka/javascript",
@@ -43,7 +43,7 @@
     "arrify": "^1.0.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.15.0",
-    "eslint-config-marlint": "^7.0.0-alpha.0",
+    "eslint-config-marlint": "^7.0.0-alpha.1",
     "eslint-config-prettier": "^7.0.0",
     "eslint-formatter-pretty": "^4.0.0",
     "eslint-json": "^2.0.0",
