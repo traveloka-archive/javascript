@@ -5,7 +5,7 @@ const toWritableGlobal = require('./toWritableGlobal');
 
 // Some CI doesn't return correct CPU core, this allow us to override
 const MAX_WORKER = process.env.MAX_CPU_CORE || os.cpus().length;
-const MAX_FILES_PER_BATCH = 250;
+const MAX_FILES_PER_BATCH = 200;
 
 const worker = new Worker(require.resolve('../worker'), {
   exposedMethods: ['lint'],
