@@ -42,7 +42,7 @@ exports.lintText = function lintText(str, options) {
 
     if (!workspacePath) {
       const engine = new ESLint(defaultOpts.eslint);
-      return engine.lintText(str, filePath);
+      return engine.lintText(str, { filePath });
     }
 
     const workspaceOpts = pkgConf.sync('marlint', { cwd: workspacePath });
@@ -60,11 +60,11 @@ exports.lintText = function lintText(str, options) {
       },
     };
     const engine = new ESLint(mergedOpts.eslint);
-    return engine.lintText(str, filePath);
+    return engine.lintText(str, { filePath });
   }
 
   const engine = new ESLint(defaultOpts.eslint);
-  return engine.lintText(str, filePath);
+  return engine.lintText(str, { filePath });
 };
 
 const DEFAULT_GLOB = '**/*.{js,jsx,ts,tsx}';
